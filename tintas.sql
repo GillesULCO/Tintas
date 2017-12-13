@@ -1,12 +1,16 @@
-CREATE DATABASE tindas;
+CREATE DATABASE tintas;
 
-USE tindas;
+USE tintas;
 
 CREATE TABLE IF NOT EXISTS `categories` (
   `ID_CAT` int(11) NOT NULL,
   `LABEL_CAT` varchar(55) NOT NULL,
   PRIMARY KEY (`ID_CAT`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `categories` (`ID_CAT`, `LABEL_CAT`) VALUES
+(1, 'Adultes'),
+(2, 'Enfants');
 
 CREATE TABLE IF NOT EXISTS `matchs` (
   `ID_USR` int(11) NOT NULL,
@@ -25,15 +29,16 @@ CREATE TABLE IF NOT EXISTS `tournois` (
 
 CREATE TABLE IF NOT EXISTS `users` (
   `ID_USR` int(11) NOT NULL AUTO_INCREMENT,
+  `PSEUDO_USR` varchar(55) NOT NULL,
   `NAME_USR` varchar(55) NOT NULL,
   `FIRSTNAME_USR` varchar(55) NOT NULL,
   `AGE_USR` int(11) NOT NULL,
   `MAIL_USR` varchar(100) NOT NULL,
+  `PASS_USR` varchar(255) NOT NULL,
   `CAT_USR` int(11) NOT NULL,
   PRIMARY KEY (`ID_USR`),
   KEY `CAT_USR` (`CAT_USR`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 ALTER TABLE `matchs`
   ADD CONSTRAINT `matchs_tournois` FOREIGN KEY (`ID_TOURN`) REFERENCES `tournois` (`ID_TOURN`),
@@ -41,4 +46,3 @@ ALTER TABLE `matchs`
 
 ALTER TABLE `users`
   ADD CONSTRAINT `categorie_user` FOREIGN KEY (`CAT_USR`) REFERENCES `categories` (`ID_CAT`);
-
