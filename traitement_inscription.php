@@ -1,6 +1,6 @@
 <?php
 
-    include_once 'connexion.php';
+    include_once 'connexion_bdd.php';
 
     if($_POST['age'] > 15){
         $categorie = 1;
