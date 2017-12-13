@@ -1,0 +1,14 @@
+#errorLog {
+    display: none !important;
+}
+
+#btn-connexion {
+    background-color: #2c3e50!important;
+    border-color: #2c3e50!important;
+}
+
+.panel-footer a {
+    color : white !important;
+    text-decoration: underline;
+    margin-right: 15px !important;
+}
