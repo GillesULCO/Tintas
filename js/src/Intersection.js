@@ -3,7 +3,7 @@
 Tintas.State = {VACANT: 0, FULL: 1};
 Tintas.Color = {WHITE: 0, RED: 1, PURPLE: 2, ORANGE: 3, YELLOW: 4, BLUE: 5, GREEN: 6, BLACK: 7, TRANSPARENT: 8};
 
-var Intersection = function (coordinate) {
+var Intersection = function (coordinate, color) {
 
     this.getLine = function() {
         return coordinate.getLine();
@@ -19,6 +19,7 @@ var Intersection = function (coordinate) {
 
     this.setColor = function(color){
         this.color = color;
+        this.updateState();
     };
 
     this.setState = function(state){
@@ -38,9 +39,14 @@ var Intersection = function (coordinate) {
     };
 
     this.init = function () {
-        this.state = Tintas.State.VACANT;
-        this.color = Tintas.Color.TRANSPARENT;
+        if(color === null || color === undefined) {
+            this.setState(Tintas.State.VACANT);
+            this.setColor(Tintas.Color.TRANSPARENT);
+        }else{
+            this.setState(Tintas.State.FULL);
+            this.setColor(color);
+        }
     };
 
-    this.init()
+    this.init();
 };
