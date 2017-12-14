@@ -15,11 +15,11 @@
         $queryRecupTournois -> execute(array());
 
         //Recuperation des enfants
-        $queryRecupEnfants = $pdo -> prepare("SELECT PSEUDO_USR,NAME_USR,FIRSTNAME_USR,AGE_USR,MAIL_USR FROM users WHERE CAT_USR = 2");
+        $queryRecupEnfants = $pdo -> prepare("SELECT ID_USR,PSEUDO_USR,NAME_USR,FIRSTNAME_USR,AGE_USR,MAIL_USR FROM users WHERE CAT_USR = 2");
         $queryRecupEnfants -> execute(array());
 
         //Recuperation des adultes
-        $queryRecupAdultes = $pdo -> prepare("SELECT PSEUDO_USR,NAME_USR,FIRSTNAME_USR,AGE_USR,MAIL_USR FROM users WHERE CAT_USR = 1");
+        $queryRecupAdultes = $pdo -> prepare("SELECT ID_USR,PSEUDO_USR,NAME_USR,FIRSTNAME_USR,AGE_USR,MAIL_USR FROM users WHERE CAT_USR = 1");
         $queryRecupAdultes -> execute(array());
     } else {
         header('Location: index.php');
@@ -64,20 +64,20 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item mx-0 mx-lg-1">
-                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#">Tournois</a>
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#rowTournoi">Tournois</a>
                 </li>
                 <li class="nav-item mx-0 mx-lg-1">
-                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#">Utilisateurs</a>
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#rowUsers">Utilisateurs</a>
                 </li>
                 <li class="nav-item mx-0 mx-lg-1">
-                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#">Déconnexion</a>
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="db/traitement_deconnexion.php">Déconnexion</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
 <div class="container text-center" id="margintopcontainer">
-    <div class="row">
+    <div class="row" id="rowTournoi">
         <h1>Créer un tournoi</h1>
     </div>
     <div class="row">
@@ -164,10 +164,10 @@
             </tbody>
         </table>
     </div>
-    <div class="row">
+    <div class="row" id="rowUsers">
         <h1>Utilisateurs inscrits</h1>
     </div>
-    <div class="row">
+    <div class="row" id="rowCatUsers">
         <h2>Catégorie enfants</h2>
     </div>
     <div class="row">
@@ -179,18 +179,19 @@
                 <th>Prénom</th>
                 <th>Age</th>
                 <th>Adresse mail</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
             <?php
             while($row = $queryRecupEnfants -> fetch(PDO::FETCH_ASSOC)){
-                echo '<tr><td>' . $row['PSEUDO_USR'] . '</td><td>' . $row['NAME_USR'] . '</td><td>' . $row['FIRSTNAME_USR'] . '</td><td>' . $row['AGE_USR'] . 'ans</td><td>' . $row['MAIL_USR'] . '</td></tr>';
+                echo '<tr><td>' . $row['PSEUDO_USR'] . '</td><td>' . $row['NAME_USR'] . '</td><td>' . $row['FIRSTNAME_USR'] . '</td><td>' . $row['AGE_USR'] . 'ans</td><td>' . $row['MAIL_USR'] . '</td><td><a href="db/traitement_suppresion_user.php?iduser=' . $row['ID_USR'] . '"><img src="img/delete.png"></a></td></tr>';
             }
             ?>
             </tbody>
         </table>
     </div>
-    <div class="row">
+    <div class="row" id="rowCatUsers">
         <h2>Catégorie adultes</h2>
     </div>
     <div class="row">
@@ -202,12 +203,13 @@
                 <th>Prénom</th>
                 <th>Age</th>
                 <th>Adresse mail</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
             <?php
             while($row = $queryRecupAdultes -> fetch(PDO::FETCH_ASSOC)){
-                echo '<tr><td>' . $row['PSEUDO_USR'] . '</td><td>' . $row['NAME_USR'] . '</td><td>' . $row['FIRSTNAME_USR'] . '</td><td>' . $row['AGE_USR'] . 'ans</td><td>' . $row['MAIL_USR'] . '</td><td><a href="#"></a></td></tr>';
+                echo '<tr><td>' . $row['PSEUDO_USR'] . '</td><td>' . $row['NAME_USR'] . '</td><td>' . $row['FIRSTNAME_USR'] . '</td><td>' . $row['AGE_USR'] . 'ans</td><td>' . $row['MAIL_USR'] . '</td><td><a href="db/traitement_suppresion_user.php?iduser=' . $row['ID_USR'] . '"><img src="img/delete.png"></a></td></tr>';
             }
             ?>
             </tbody>

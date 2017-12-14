@@ -36,6 +36,8 @@ if(isset($_POST['pseudo']) && !empty($_POST['pseudo']) && isset($_POST['motdepas
         }else{
             header('Location:../game.php');
         }
+    } else {
+        header('Location:../connexion.php');
     }
 }
 ?>

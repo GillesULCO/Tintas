@@ -101,7 +101,7 @@ else
                     </div>
                 </div>
             </div>
-            <div class="panel panel-default text-center" style="padding-top:50px">
+            <div class="panel panel-default text-center" style="padding-top:100px">
                 <div class="panel-heading" style="font-weight: bold; font-size: 25px; margin-bottom: 30px">STATISTIQUES</div>
                 <div class="panel-body">
                     <div class="col-md-12" style="margin-bottom: 10px">
@@ -136,6 +136,19 @@ else
                     <div class="col-lg-12 text-center">
                         <g:plusone size="tall"></g:plusone>
                     </div>
+                </div>
+            </div>
+            <div class="panel panel-default text-center" style="padding-top:50px">
+                <div class="panel-heading" style="font-weight: bold; font-size: 25px; margin-bottom: 30px">CLASSEMENT</div>
+                <div class="panel-body">
+                    <table class="table table-bordered" style="width: 70%; margin-left: 50px;">
+                        <?php
+                            $query="SELECT PSEUDO_USR, POINTS FROM users ORDER BY POINTS desc";
+                            foreach  ($pdo->query($query) as $row) {
+                                echo '<tr ><td class="col-md-6">' . $row["PSEUDO_USR"] . '</td><td class="col-md-6">' . $row["POINTS"] . '</td></tr>';
+                            }
+                        ?>
+                    </table>
                 </div>
             </div>
         </div>
