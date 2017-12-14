@@ -13,8 +13,25 @@ if(isset($_POST['pseudo']) && !empty($_POST['pseudo']) && isset($_POST['motdepas
 
     if($count = $prep->rowCount() > 0)
     {
+        $data=$prep->fetch();
+
+        $id=$data['ID_USR'];
+
+        /*
+            CREATION D'UN COOKIE CONTENANT POUR VALEUR UN SID COMPOSE DES ACCES DE LA PERSONNE CONCATENES AVEC LA FONCTION TIME() DE PHP
+            ENREGISTREMENT EN BDD DU SID
+        */
+        $sid = md5($_POST['pseudo'].$_POST['motdepasse'].time());
+
+        setcookie("cookieTintas", $sid, time()+3600, '/');
+
+        $query = 'UPDATE users SET SESSION_USR = :sid WHERE ID_USR =:id ';
+        $prep = $pdo->prepare($query);
+        $prep->bindValue(':sid', $sid);
+        $prep->bindValue(':id', $id);
+        $prep->execute();
+
         header('Location:../game.php');
     }
 }
-
 ?>

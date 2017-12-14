@@ -59,9 +59,9 @@
                         </div>
                         <form class="form-horizontal" method="POST" action="db/traitement_connexion.php">
                             <div class="form-group" style="margin-top:70px">
-                                <label class="col-md-4 control-label" for="email" >Identifiant :</label>
+                                <label class="col-md-4 control-label" for="pseudo" >Identifiant :</label>
                                 <div class="col-md-12" id="pseudoDIV">
-                                    <input type="text" class="form-control" id="pseudo" name="pseudo" placeholder="Email">
+                                    <input type="text" class="form-control" id="pseudo" name="pseudo" placeholder="Pseudo">
                                 </div>
                             </div>
                             <div class="form-group">
