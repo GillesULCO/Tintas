@@ -5,6 +5,10 @@ Tintas.Color = {WHITE: 0, RED: 1, PURPLE: 2, ORANGE: 3, YELLOW: 4, BLUE: 5, GREE
 
 var Intersection = function (coordinate, color) {
 
+    this.getCoord = function() {
+        return coordinate;
+    };
+
     this.getLine = function() {
         return coordinate.getLine();
     };
