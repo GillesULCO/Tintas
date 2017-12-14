@@ -58,7 +58,7 @@ else
     <script type="text/javascript" src="https://apis.google.com/js/plusone.js">
         {lang: 'fr'}
     </script>
-
+    <script type="text/javascript" src="vendor/jquery/jquery.min.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
@@ -99,6 +99,7 @@ else
                     <div class="col-md-12">
                         Catégorie : <?php if($categorie == 1) { echo "Adultes"; } else { echo "Enfants"; } ?>
                     </div>
+                    <input id="user_id" type="hidden" value="<?php echo $id?>" />
                 </div>
             </div>
             <div class="panel panel-default text-center" style="padding-top:100px">
