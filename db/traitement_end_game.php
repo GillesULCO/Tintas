@@ -8,12 +8,13 @@ if(isset($_POST['id']) && isset($_POST['_winner'])){
     $reponse = $pdo->query("SELECT PARTIE_JOUEES, PARTIE_GAGNEES, PARTIE_PERDUES FROM users WHERE ID_USR=" . $id_user);
     $data = $reponse->fetch();
     $nb_games = $data['PARTIE_JOUEES'] + 1;
-    $nb_win = $data['PARTIE_GAGNEES'] + 0;
-    $nb_loose = $data['PARTIE_PERDUES'] + 0;
-    if($winner === 0) {
-        $nb_win ++;
-    }else if($winner === 1){
-        $nb_loose ++;
+    $nb_win = $data['PARTIE_GAGNEES'];
+    $nb_loose = $data['PARTIE_PERDUES'];
+
+    if($winner == '0') {
+        $nb_win++;
+    }else if($winner == '1'){
+        $nb_loose++;
     }
 
     $query = $pdo -> prepare("UPDATE users SET PARTIE_JOUEES=:nb_games, PARTIE_GAGNEES=:nb_win, 

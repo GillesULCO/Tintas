@@ -58,6 +58,9 @@ window.onload = function() {
     var textCounter1 = [];
     var textCounter2 = [];
 
+    // Flag requête AJAX
+    var requestSend = false;
+
     // Chargement des assets
     function preload() {
         game.load.image('slot', 'img/slot.png');
@@ -216,25 +219,25 @@ window.onload = function() {
         }
     }
 
-    var t = false;
     function update() {
-        if (engine.getState() === Tintas.StateEngine.END_GAME && !t) {
-            console.log('ENVOIE');
-            t = true;
+        if (engine.getState() === Tintas.StateEngine.END_GAME && !requestSend) {
+            requestSend = true;
+
             var _winner = engine.getCurrentPlayer();
             var user_id = document.getElementById('user_id').value;
             var data = {
                 "_winner" : _winner,
                 "id": user_id
             };
-                $.ajax({
-                    data : data,
-                    type: "post",
-                    url : "db/traitement_end_game.php",
-                    success: function(data) {
-                        document.location.href = "game.php";
-                    }
-                });
+            $.ajax({
+                data : data,
+                type: "post",
+                url : "db/traitement_end_game.php",
+                success: function(data) {
+                    // redirection vers la page jeu
+                    document.location.href = "game.php";
+                }
+            });
         }
     }
 
