@@ -31,7 +31,11 @@ if(isset($_POST['pseudo']) && !empty($_POST['pseudo']) && isset($_POST['motdepas
         $prep->bindValue(':id', $id);
         $prep->execute();
 
-        header('Location:../game.php');
+        if($data['CAT_USR'] == 3){
+            header('Location:../accueil_admin.php');
+        }else{
+            header('Location:../game.php');
+        }
     }
 }
 ?>
