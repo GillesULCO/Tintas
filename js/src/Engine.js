@@ -75,7 +75,7 @@ var Engine = function () {
     };
 
     this.putPiece = function (coordinate) {
-        if (coordinate.isValid()) {
+        if (coordinate.isValid() && this.getIntersection(coordinate).getState() !== Tintas.State.VACANT) {
             var colorInter = this.getIntersection(coordinate).getColor();
             this.positionPiece = coordinate;
             this.getIntersection(this.positionPiece).setColor(Tintas.Color.BLACK);
