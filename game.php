@@ -20,6 +20,10 @@ include_once 'db/connexion_bdd.php';
           type="text/css">
     <link href="css/freelancer.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <script type="text/javascript" src="js/src/Tintas.js"></script>
+    <script type="text/javascript" src="js/src/Coordinates.js"></script>
+    <script type="text/javascript" src="js/src/Intersection.js"></script>
+    <script type="text/javascript" src="js/src/Engine.js"></script>
     <script type="text/javascript" src="vendor/phaser/phaser.js"></script>
     <script type="text/javascript" src="js/game.js"></script>
     <script type="text/javascript" src="https://apis.google.com/js/plusone.js">
