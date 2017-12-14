@@ -229,6 +229,7 @@ window.onload = function() {
                     type: "post",
                     url : "db/traitement_end_game.php",
                     success: function(data) {
+                        document.location.href = "game.php";
                     }
                 });
         }
