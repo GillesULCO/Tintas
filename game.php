@@ -6,7 +6,7 @@ include_once 'db/connexion_bdd.php';
 */
 if(isset($_COOKIE['cookieTintas']))
 {
-    $query="SELECT SESSION_USR, PSEUDO_USR, ID_USR FROM users WHERE SESSION_USR = :sid";
+    $query="SELECT * FROM users WHERE SESSION_USR = :sid";
 
     $prep = $pdo->prepare($query);
     $prep->bindValue(':sid', $_COOKIE['cookieTintas']);
@@ -18,6 +18,10 @@ if(isset($_COOKIE['cookieTintas']))
 
         $pseudo=$data['PSEUDO_USR'];
         $id=$data['ID_USR'];
+        $categorie=$data['CAT_USR'];
+        $nbPartiesJouees=$data['PARTIE_JOUEES'];
+        $nbVictoires=$data['PARTIE_GAGNEES'];
+        $nbDefaites=$data['PARTIE_PERDUES'];
     }
 }
 else
@@ -67,10 +71,7 @@ else
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item mx-0 mx-lg-1">
-                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="inscription.php">Inscription</a>
-                </li>
-                <li class="nav-item mx-0 mx-lg-1">
-                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="connexion.php">Connexion</a>
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="inscription.php">DÉCONNEXION</a>
                 </li>
             </ul>
         </div>
@@ -96,7 +97,7 @@ else
                         Pseudo : <?php echo $pseudo; ?>
                     </div>
                     <div class="col-md-12">
-                        Catégorie : <?php if($pseudo == 1) { echo "Adultes"; } else { echo "Enfants"; } ?>
+                        Catégorie : <?php if($categorie == 1) { echo "Adultes"; } else { echo "Enfants"; } ?>
                     </div>
                 </div>
             </div>
@@ -104,13 +105,13 @@ else
                 <div class="panel-heading" style="font-weight: bold; font-size: 25px; margin-bottom: 30px">STATISTIQUES</div>
                 <div class="panel-body">
                     <div class="col-md-12" style="margin-bottom: 10px">
-                        Nombre de parties jouées : 10
+                        Nombre de parties jouées : <?php echo $nbPartiesJouees; ?>
                     </div>
                     <div class="col-md-12">
-                        Victoires : 6
+                        Victoires : <?php echo $nbVictoires; ?>
                     </div>
                     <div class="col-md-12">
-                        Défaites : 4
+                        Défaites : <?php echo $nbDefaites; ?>
                     </div>
                 </div>
             </div>
