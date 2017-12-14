@@ -165,7 +165,7 @@ window.onload = function() {
 
     function update() {
         if (engine.getState() === Tintas.StateEngine.END_GAME) {
-            window.alert('HAHA');
+            //window.alert('HAHA');
         }
     }
 
