@@ -64,7 +64,7 @@ include_once 'connexion_bdd.php';
             </div>
         </div>
     </div>
-</footer>
+</div>
 
 </body>
 

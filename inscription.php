@@ -23,11 +23,7 @@
         <div class="jumbotron jumbotron-fluid">
             <div class="container">
                 <h1 id="title_inscription" class="display-3">Inscription</h1>
-<<<<<<< HEAD
                 <form action="db/traitement_inscription.php" method="post">
-=======
-                <form action="db\traitement_inscription.php" method="post">
->>>>>>> page_inscription
                     <div class="form-group">
                         <label for="name">Nom<red>*</red></label>
                         <input type="text" class="form-control" name="name" required>
