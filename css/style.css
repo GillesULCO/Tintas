@@ -62,3 +62,11 @@ h1{
 .bold{
     font-weight: bold;
 }
+
+#rowUsers{
+    margin-top: 14%;
+}
+
+#rowCatUsers{
+    margin-top: 5%;
+}
