@@ -47,11 +47,12 @@ TintasTestCase.prototype.testStory3 = function() {
     var nbColors = [0, 0, 0, 0, 0, 0, 0];
     for (indexInter = 0; indexInter < engine.getIntersections().length; indexInter += 1) {
         inter = engine.getIntersections()[indexInter];
+        assertTrue(inter.getColor() !== undefined);
         nbColors[inter.getColor()]++;
     }
     var indexColor;
     for (indexColor = 0; indexColor < 7 ; indexColor++){
-        assertTrue(nbColors[indexColor] === 3);
+        assertTrue(nbColors[indexColor] === 7);
     }
 };
 
