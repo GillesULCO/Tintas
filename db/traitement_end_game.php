@@ -22,6 +22,10 @@ if(isset($_POST['id']) && isset($_POST['_winner'])){
         'id_user'   => $id_user
     ));
 
+    echo '<script>';
+    echo 'console.log("HAHAHA");';
+    echo '</script>';
+
     header('Location:../game.php');
 }
 

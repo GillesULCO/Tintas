@@ -221,7 +221,7 @@ window.onload = function() {
             var _winner = engine.getCurrentPlayer();
             var user_id = document.getElementById('user_id').value;
             var data = {
-                "winner" : _winner,
+                "_winner" : _winner,
                 "id": user_id
             };
                 $.ajax({
