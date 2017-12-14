@@ -77,6 +77,9 @@ var Engine = function () {
     this.putPiece = function (coordinate) {
         if (coordinate.isValid() && this.getIntersection(coordinate).getState() !== Tintas.State.VACANT && this.getIntersection(coordinate).getColor() !== Tintas.Color.BLACK) {
             var colorInter = this.getIntersection(coordinate).getColor();
+            if(this.positionPiece !== null){
+                this.getIntersection(this.positionPiece).setColor(Tintas.Color.TRANSPARENT);
+            }
             this.positionPiece = coordinate;
             this.getIntersection(this.positionPiece).setColor(Tintas.Color.BLACK);
             this.increaseColorPieceOfPlayer(colorInter);
