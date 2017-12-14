@@ -58,7 +58,7 @@ else
     <script type="text/javascript" src="https://apis.google.com/js/plusone.js">
         {lang: 'fr'}
     </script>
-
+    <script type="text/javascript" src="vendor/jquery/jquery.min.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
