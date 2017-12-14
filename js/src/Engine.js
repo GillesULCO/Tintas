@@ -113,7 +113,7 @@ var Engine = function () {
             this.currentPlayer = Tintas.Player.PLAYER1;
             return true;
         }
-        if(this._7Pieces(this.piecesPlayer1) || this._4Pieces4Colors(this.piecesPlayer1)){
+        if(this._7Pieces(this.piecesPlayer2) || this._4Pieces4Colors(this.piecesPlayer2)){
             this.currentPlayer = Tintas.Player.PLAYER2;
             return true;
         }
