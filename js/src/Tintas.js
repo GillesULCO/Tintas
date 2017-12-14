@@ -1,2 +1,1 @@
-// namespace Lyngk
 var Tintas = {};
