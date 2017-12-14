@@ -43,7 +43,11 @@ window.onload = function() {
     // Le moteur du jeu
     var engine = new Engine();
 
+    // La sélection courante
     var selection;
+
+    // Une référence vers le sprite pion
+    var spritePion;
 
     // Chargement des assets
     function preload() {
@@ -57,6 +61,7 @@ window.onload = function() {
         game.load.image('slot_yellow', 'img/slot_yellow.png');
         game.load.image('slot_pion', 'img/slot_pion.png');
         game.load.image('sélection', 'img/selection.png');
+        game.load.image('valider', 'img/bouton_valider.png');
     }
 
     // Initialisation
@@ -125,6 +130,12 @@ window.onload = function() {
         game.input.mouse.capture = true;
         selection = game.add.sprite(0, 0, 'sélection');
         hideSelection();
+
+        game.add.button(game.world.width - 95, 550, 'valider', validerAction, this, 0, 0, 0);
+    }
+
+    function validerAction() {
+
     }
 
     function update() {
@@ -155,9 +166,17 @@ window.onload = function() {
 
     function spriteClick(sprite, pointer) {
         if (pointer.leftButton.isDown) {
-            selectSprite(sprite);
-            console.log(sprite);
+            leftClick(sprite);
         }
+    }
+
+    function leftClick(sprite) {
+        var state = engine.getCurrentState();
+
+        if (engine.putPiece(sprite.coordinates)) {
+            changeSpriteTexture(sprite, 'slot_pion');
+        }
+
     }
 
     function render() {
