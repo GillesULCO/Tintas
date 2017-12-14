@@ -1,5 +1,5 @@
 <?php
-include_once 'db/connexion_bdd.php';
+include_once 'connexion_bdd.php';
 ?>
 
 <!doctype html>
