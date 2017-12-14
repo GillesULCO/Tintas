@@ -57,7 +57,7 @@
                                 <img src="img/cadenas.jpg" alt="cadenas" class="img-rounded" >
                             </div>
                         </div>
-                        <form class="form-horizontal" method="POST" action="connexion_tintas.php">
+                        <form class="form-horizontal" method="POST" action="db/traitement_connexion.php">
                             <div class="form-group" style="margin-top:70px">
                                 <label class="col-md-4 control-label" for="email" >Identifiant :</label>
                                 <div class="col-md-12" id="pseudoDIV">
