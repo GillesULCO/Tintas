@@ -25,6 +25,14 @@ red{
     margin-top:29px;
 }
 
+#margintopcontainer{
+    margin-top: 7%;
+}
+
+h1{
+    text-align: center;
+}
+
 .footer{
     position:fixed;
     left:0px;
@@ -32,4 +40,25 @@ red{
     height:30px;
     width:100%;
     background:#2c3e50;
+}
+
+#centerBut{
+    background-color: #2c3e50;
+    color: #18bc9c;
+}
+
+.green{
+    color: green;
+}
+
+.orange{
+    color: #FFDA8C;
+}
+
+.red{
+    color: red;
+}
+
+.bold{
+    font-weight: bold;
 }
