@@ -3,8 +3,8 @@
         $PARAM_hote = 'localhost';
         $PARAM_port = '3306';
         $PARAM_nom_bd = 'tintas';
-        $PARAM_utilisateur = 'root';
-        $PARAM_mot_passe = '';
+        $PARAM_utilisateur = 'phpmyadmin';
+        $PARAM_mot_passe = 'test';
 
         $pdo =  new PDO('mysql:host=' .
             $PARAM_hote .

@@ -43,8 +43,6 @@ window.onload = function() {
     // Le moteur du jeu
     var engine = new Engine();
 
-    console.log("LENGTH: " + COORDS.length);
-
     // Chargement des assets
     function preload() {
         game.load.image('slot', 'img/slot.png');
@@ -55,7 +53,7 @@ window.onload = function() {
         game.load.image('slot_red', 'img/slot_red.png');
         game.load.image('slot_white', 'img/slot_white.png');
         game.load.image('slot_yellow', 'img/slot_yellow.png');
-        game.load.image('pion', 'img/pion.png');
+        game.load.image('slot_pion', 'img/slot_pion.png');
     }
 
     // Initialisation
@@ -71,21 +69,26 @@ window.onload = function() {
             [5, -HALF_SLOT_HEIGHT],
             [2, -SLOT_HEIGHT * 2.5]];
 
+        // Ordonnée de départ
         var currentHeight = HEIGHT / 3;
+        // Décalage pour centrer le plateau dans le canvas
         var xColOffset = 3;
+        // L'indice de la coordonnée courante
         var coordIndex = 0;
 
-        // Dessine de haut en bas
+        // Dessine le plateau de haut en bas
         for (var x = xColOffset; x < NUM_COLS + xColOffset; x++) {
             var slot = slotData[x - xColOffset];
+            // Met à jour l'ordonnée de départ de la colonne courante
             currentHeight -= slot[1];
 
+            // Placement des jetons de la colonne courante
             for (var i = 0; i < slot[0]; i++) {
                 var currentCoordinates = COORDS[coordIndex++];
-                console.log(currentCoordinates);
                 var intersection = engine.getIntersection(currentCoordinates);
-                var slotImage;
 
+                // On cherche le sprite correspondant à la couleur de l'intersection
+                var slotImage;
                 if (intersection.getColor() === Tintas.Color.WHITE) {
                     slotImage = 'slot_white';
                 } else if (intersection.getColor() === Tintas.Color.BLUE) {
@@ -105,7 +108,10 @@ window.onload = function() {
                 }
 
                 var slotSprite = game.add.sprite(x * SLOT_WIDTH / 1.26, currentHeight + (i * SLOT_HEIGHT), slotImage);
+                // Données relatives au jeu
                 slotSprite.coordinates = currentCoordinates;
+                slotSprite.selected = false;
+                // Activation des évènements
                 slotSprite.inputEnabled = true;
                 slotSprite.events.onInputDown.add(spriteClick, this);
             }
@@ -118,11 +124,14 @@ window.onload = function() {
 
     }
 
+    function changeSpriteTexture(sprite, textureName) {
+        sprite.loadTexture(textureName, 0);
+    }
+
     function spriteClick(sprite, pointer) {
         if (pointer.leftButton.isDown) {
-            console.log(sprite.tmp);
-        } else if (pointer.rightButton.isDown) {
-            console.log("RIGHT");
+            changeSpriteTexture(sprite, 'slot_pion');
+            console.log(sprite);
         }
     }
 
