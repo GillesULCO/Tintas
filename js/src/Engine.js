@@ -6,7 +6,7 @@ var Engine = function () {
     this.majColors = function () {
         var color;
         for (color = 0; color < this.availableColors.length; color += 1) {
-            this.majArrayColors(color, 3);
+            this.majArrayColors(color, 7);
         }
     };
 
@@ -22,7 +22,6 @@ var Engine = function () {
         this.nbColors[randomColor] += 1;
 
         return randomColor;
-
     };
 
     this.initialize = function () {

@@ -27,6 +27,10 @@ var Coordinates = function (c, l) {
         return this.line;
     };
 
+    this.toString = function() {
+        return this.getColumn() + this.getLine();
+    };
+
     this.getColumn = function () {
         return this.column;
     };

@@ -40,12 +40,16 @@ var Intersection = function (coordinate, color) {
 
     this.init = function () {
         if(color === null || color === undefined) {
-            this.setState(Tintas.State.VACANT);
-            this.setColor(Tintas.Color.TRANSPARENT);
+            this.state = Tintas.State.VACANT;
+            this.color = Tintas.Color.TRANSPARENT;
         }else{
-            this.setState(Tintas.State.FULL);
-            this.setColor(color);
+            this.state = Tintas.State.FULL;
+            this.color = color;
         }
+    };
+
+    this.toString = function() {
+        return this.getColumn() + this.getLine();
     };
 
     this.init();
