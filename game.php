@@ -99,7 +99,7 @@ else
                     <div class="col-md-12">
                         Catégorie : <?php if($categorie == 1) { echo "Adultes"; } else { echo "Enfants"; } ?>
                     </div>
-                    <div class="col-md-12" id="user_id" style="visibility: hidden"><?php echo $id?></div>
+                    <input id="user_id" type="hidden" value="<?php echo $id?>" />
                 </div>
             </div>
             <div class="panel panel-default text-center" style="padding-top:100px">

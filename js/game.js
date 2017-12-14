@@ -219,13 +219,18 @@ window.onload = function() {
     function update() {
         if (engine.getState() === Tintas.StateEngine.END_GAME) {
             var _winner = engine.getCurrentPlayer();
-                $.post(
-                    'db/traitement_end_game.php',
-                    {
-                        id : $('#user_id').innerHTML,
-                        winner : _winner
+            var user_id = document.getElementById('user_id').value;
+            var data = {
+                "winner" : _winner,
+                "id": user_id
+            };
+                $.ajax({
+                    data : data,
+                    type: "post",
+                    url : "db/traitement_end_game.php",
+                    success: function(data) {
                     }
-                );
+                });
         }
     }
 
