@@ -54,6 +54,10 @@ window.onload = function() {
     // Statut du jeu
     var text;
 
+    // Compteurs de pièces
+    var textCounter1 = [];
+    var textCounter2 = [];
+
     // Chargement des assets
     function preload() {
         game.load.image('slot', 'img/slot.png');
@@ -67,6 +71,43 @@ window.onload = function() {
         game.load.image('slot_pion', 'img/slot_pion.png');
         game.load.image('sélection', 'img/selection.png');
         game.load.image('valider', 'img/bouton_valider.png');
+
+        game.load.image('piece_blue', 'img/piece_blue.png');
+        game.load.image('piece_green', 'img/piece_green.png');
+        game.load.image('piece_orange', 'img/piece_orange.png');
+        game.load.image('piece_purple', 'img/piece_purple.png');
+        game.load.image('piece_red', 'img/piece_red.png');
+        game.load.image('piece_white', 'img/piece_white.png');
+        game.load.image('piece_yellow', 'img/piece_yellow.png');
+    }
+
+    function addPiecesHUD(startPieceY, pieceOffset) {
+        game.add.sprite(10, startPieceY, 'piece_white');
+        game.add.sprite(10, startPieceY + pieceOffset, 'piece_red');
+        game.add.sprite(10, startPieceY + pieceOffset * 2, 'piece_purple');
+        game.add.sprite(10, startPieceY + pieceOffset * 3, 'piece_orange');
+        game.add.sprite(10, startPieceY + pieceOffset * 4, 'piece_yellow');
+        game.add.sprite(10, startPieceY + pieceOffset * 5, 'piece_blue');
+        game.add.sprite(10, startPieceY + pieceOffset * 6, 'piece_green');
+    }
+
+    function addPiecesCounterHUD(startPieceY, pieceOffset, isPlayerOne) {
+        var style = { font: "15px Arial", fill: "#ffffff", align: "left" };
+        var textCounter;
+
+        if (isPlayerOne) {
+            textCounter = textCounter1;
+        } else {
+            textCounter = textCounter2;
+        }
+
+        textCounter.push(game.add.text(30, startPieceY, '0', style));
+        textCounter.push(game.add.text(30, startPieceY + pieceOffset, '0', style));
+        textCounter.push(game.add.text(30, startPieceY + pieceOffset * 2, '0', style));
+        textCounter.push(game.add.text(30, startPieceY + pieceOffset * 3, '0', style));
+        textCounter.push(game.add.text(30, startPieceY + pieceOffset * 4, '0', style));
+        textCounter.push(game.add.text(30, startPieceY + pieceOffset * 5, '0', style));
+        textCounter.push(game.add.text(30, startPieceY + pieceOffset * 6, '0', style));
     }
 
     // Initialisation
@@ -74,6 +115,16 @@ window.onload = function() {
         game.stage.backgroundColor = '#2c3e50';
         var style = { font: "15px Arial", fill: "#ffffff", align: "left" };
         text = game.add.text(10, 10, '', style);
+
+        // HUD Joueur 1
+        game.add.text(10, 100, 'Joueur 1', style);
+        addPiecesHUD(130, 20);
+        addPiecesCounterHUD(130, 20, true);
+
+        // Hud Joueur 2
+        game.add.text(10, 280, 'Joueur 2', style);
+        addPiecesHUD(310, 20);
+        addPiecesCounterHUD(310, 20, false);
 
         // Nombres de slots, Offset en y
         var slotData = [[2, 0],
@@ -89,7 +140,7 @@ window.onload = function() {
         // Ordonnée de départ
         var currentHeight = HEIGHT / 3;
         // Décalage pour centrer le plateau dans le canvas
-        var xColOffset = 3;
+        var xColOffset = 4;
         // L'indice de la coordonnée courante
         var coordIndex = 0;
 
@@ -150,6 +201,7 @@ window.onload = function() {
                 changeSpriteTexture(selectedSprite, 'slot_pion');
                 spritePion = selectedSprite;
                 updateText();
+                updatePiecesCounter();
                 hideSelection();
             }
         } else if (state === Tintas.StateEngine.IN_GAME) {
@@ -158,6 +210,7 @@ window.onload = function() {
                 changeSpriteTexture(spritePion, 'slot');
                 spritePion = selectedSprite;
                 updateText();
+                updatePiecesCounter();
                 hideSelection();
             }
         }
@@ -165,7 +218,7 @@ window.onload = function() {
 
     function update() {
         if (engine.getState() === Tintas.StateEngine.END_GAME) {
-            //window.alert('HAHA');
+
         }
     }
 
@@ -220,6 +273,24 @@ window.onload = function() {
             } else {
                 text.setText("Le joueur 2 a gagné la partie");
             }
+        }
+    }
+
+    function updatePiecesCounter() {
+        var currentPlayer = engine.getCurrentPlayer();
+        var pieces;
+        var counters;
+
+        if (currentPlayer === Tintas.Player.PLAYER1) {
+            pieces = engine.getPiecesPlayer(Tintas.Player.PLAYER2);
+            counters = textCounter2;
+        } else {
+            pieces = engine.getPiecesPlayer(Tintas.Player.PLAYER1);
+            counters = textCounter1;
+        }
+
+        for (var i = 0; i < pieces.length; i++) {
+            counters[i].setText(pieces[i]);
         }
     }
 
