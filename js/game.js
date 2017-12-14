@@ -216,8 +216,11 @@ window.onload = function() {
         }
     }
 
+    var t = false;
     function update() {
-        if (engine.getState() === Tintas.StateEngine.END_GAME) {
+        if (engine.getState() === Tintas.StateEngine.END_GAME && !t) {
+            console.log('ENVOIE');
+            t = true;
             var _winner = engine.getCurrentPlayer();
             var user_id = document.getElementById('user_id').value;
             var data = {
