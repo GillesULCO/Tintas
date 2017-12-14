@@ -112,3 +112,16 @@ TintasTestCase.prototype.testStory5 = function(){
     assertFalse(engine.move(B4));
 };
 
+/**
+ * Test player earns pieces
+ */
+TintasTestCase.prototype.testStory6 = function(){
+    var engine = new Engine();
+    var A3 = new Coordinates('A', 3);
+    var inter_A3 = engine.getIntersection(A3);
+    var A3color = inter_A3.getColor();
+    engine.putPiece(A3);
+    assertTrue(engine.getPiecesPlayer(engine.getCurrentPlayer())[A3color] === 1);
+};
+
+

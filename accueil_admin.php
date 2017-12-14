@@ -2,23 +2,30 @@
 
     include_once 'db/connexion_bdd.php';
 
-    //Recuperation des categories
-    $queryRecupCategories = $pdo -> prepare("SELECT ID_CAT,LABEL_CAT FROM categories");
-    $queryRecupCategories -> execute(array());
+    /*
+    VERIFICATION DE LA PRESENCE DU COOKIE, RECUPERATION DES DONNEES LIES A CET UTILISATEUR
+    */
+    if (isset($_COOKIE['cookieTintas'])) {
+        //Recuperation des categories
+        $queryRecupCategories = $pdo -> prepare("SELECT ID_CAT,LABEL_CAT FROM categories");
+        $queryRecupCategories -> execute(array());
 
-    //Recuperation des tournois
-    $queryRecupTournois = $pdo -> prepare("SELECT TITRE_TOURN,DATEDEB_TOURN,DATEFIN_TOURN,CAT_TOURN FROM tournois");
-    $queryRecupTournois -> execute(array());
+        //Recuperation des tournois
+        $queryRecupTournois = $pdo -> prepare("SELECT TITRE_TOURN,DATE_FORMAT(DATEDEB_TOURN,'%d-%m-%Y') AS DATEDEB_TOURN,DATE_FORMAT(DATEFIN_TOURN,'%d-%m-%Y') AS DATEFIN_TOURN,CAT_TOURN FROM tournois");
+        $queryRecupTournois -> execute(array());
 
-    //Recuperation des enfants
-    $queryRecupEnfants = $pdo -> prepare("SELECT PSEUDO_USR,NAME_USR,FIRSTNAME_USR,AGE_USR,MAIL_USR FROM users WHERE CAT_USR = 2");
-    $queryRecupEnfants -> execute(array());
+        //Recuperation des enfants
+        $queryRecupEnfants = $pdo -> prepare("SELECT PSEUDO_USR,NAME_USR,FIRSTNAME_USR,AGE_USR,MAIL_USR FROM users WHERE CAT_USR = 2");
+        $queryRecupEnfants -> execute(array());
 
-    //Recuperation des adultes
-    $queryRecupAdultes = $pdo -> prepare("SELECT PSEUDO_USR,NAME_USR,FIRSTNAME_USR,AGE_USR,MAIL_USR FROM users WHERE CAT_USR = 1");
-    $queryRecupAdultes -> execute(array());
+        //Recuperation des adultes
+        $queryRecupAdultes = $pdo -> prepare("SELECT PSEUDO_USR,NAME_USR,FIRSTNAME_USR,AGE_USR,MAIL_USR FROM users WHERE CAT_USR = 1");
+        $queryRecupAdultes -> execute(array());
+    } else {
+        header('Location: index.php');
+    }
 
-    $date = date("Y-m-d");
+    $date = date("d-m-Y");
 ?>
 <!doctype html>
 <html lang="fr">
@@ -200,7 +207,7 @@
             <tbody>
             <?php
             while($row = $queryRecupAdultes -> fetch(PDO::FETCH_ASSOC)){
-                echo '<tr><td>' . $row['PSEUDO_USR'] . '</td><td>' . $row['NAME_USR'] . '</td><td>' . $row['FIRSTNAME_USR'] . '</td><td>' . $row['AGE_USR'] . 'ans</td><td>' . $row['MAIL_USR'] . '</td></tr>';
+                echo '<tr><td>' . $row['PSEUDO_USR'] . '</td><td>' . $row['NAME_USR'] . '</td><td>' . $row['FIRSTNAME_USR'] . '</td><td>' . $row['AGE_USR'] . 'ans</td><td>' . $row['MAIL_USR'] . '</td><td><a href="#"></a></td></tr>';
             }
             ?>
             </tbody>

@@ -1,6 +1,7 @@
 "use strict";
 
 Tintas.Player = {PLAYER1: 0, PLAYER2: 1};
+Tintas.StateEngine = {FIRST_TOUR: 0, IN_GAME:1, END_GAME:2};
 
 var Engine = function () {
     this.majColors = function () {
@@ -51,6 +52,10 @@ var Engine = function () {
         this.positionPiece = coord;
     };
 
+    this.getState = function(){
+        return this.state;
+    };
+
     this.increaseColorPieceOfPlayer = function (color) {
         if (color < 7) {
             if (this.getCurrentPlayer() === Tintas.Player.PLAYER1)
@@ -66,7 +71,13 @@ var Engine = function () {
             this.positionPiece = coordinate;
             this.getIntersection(this.positionPiece).setColor(Tintas.Color.BLACK);
             this.increaseColorPieceOfPlayer(colorInter);
+            this.state = Tintas.StateEngine.IN_GAME;
+            if(this.endOfGame()){
+                this.state = Tintas.StateEngine.END_GAME;
+            }
+            return true;
         }
+        return false;
     };
 
     this.move = function (newCoordinate) {
@@ -78,7 +89,44 @@ var Engine = function () {
         this.getIntersection(newCoordinate).setColor(Tintas.Color.BLACK);
         this.setPositionPiece(newCoordinate);
         this.currentPlayer = !this.currentPlayer;
+        if(this.getVoisins(newCoordinate).length === 0){
+            this.state = Tintas.StateEngine.FIRST_TOUR;
+        }
+        if(this.endOfGame()){
+            this.state = Tintas.StateEngine.END_GAME;
+        }
         return true;
+    };
+
+    this.endOfGame = function() {
+        if(this._7Pieces(this.piecesPlayer1) || this._4Pieces4Colors(this.piecesPlayer1)){
+            this.currentPlayer = Tintas.Player.PLAYER1;
+            return true;
+        }
+        if(this._7Pieces(this.piecesPlayer1) || this._4Pieces4Colors(this.piecesPlayer1)){
+            this.currentPlayer = Tintas.Player.PLAYER2;
+            return true;
+        }
+        return false;
+    };
+
+    this._7Pieces = function(arrayPieces){
+      var i;
+      for (i=0; i < arrayPieces.length ; i++){
+          if(arrayPieces[i] === 7)
+              return true;
+      }
+      return false;
+    };
+
+    this._4Pieces4Colors = function(arrayPieces){
+        var i;
+        var count = 0;
+        for (i=0; i < arrayPieces.length ; i++){
+            if(arrayPieces[i] === 4)
+                count ++;
+        }
+        return count === 4;
     };
 
     this.isMoveValid = function (newCoordinate) {
@@ -130,6 +178,13 @@ var Engine = function () {
         return this.currentPlayer;
     };
 
+    this.getPiecesPlayer = function (player){
+        if (player === Tintas.Player.PLAYER1)
+            return this.piecesPlayer1;
+        else
+            return this.piecesPlayer2;
+    };
+
     this.initializeInter = function (coord) {
         if (coord.isValid()) {
             var color = this.getRandomColor();
@@ -143,6 +198,7 @@ var Engine = function () {
     this.initialize = function () {
         this.availableColors = [0, 1, 2, 3, 4, 5, 6];
         this.intersections = [];
+        this.state = Tintas.StateEngine.FIRST_TOUR;
         this.nbColors = [0, 0, 0, 0, 0, 0, 0];
         this.currentPlayer = Math.floor(Math.random() * 2);
         this.positionPiece = null;
