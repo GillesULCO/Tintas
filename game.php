@@ -1,5 +1,33 @@
 <?php
 include_once 'db/connexion_bdd.php';
+
+/*
+    VERIFICATION DE LA PRESENCE DU COOKIE, RECUPERATION DES DONNEES LIES A CET UTILISATEUR
+*/
+if(isset($_COOKIE['cookieTintas']))
+{
+    $query="SELECT * FROM users WHERE SESSION_USR = :sid";
+
+    $prep = $pdo->prepare($query);
+    $prep->bindValue(':sid', $_COOKIE['cookieTintas']);
+    $prep->execute();
+
+    if($count=$prep->rowCount()>0)
+    {
+        $data = $prep->fetch();
+
+        $pseudo=$data['PSEUDO_USR'];
+        $id=$data['ID_USR'];
+        $categorie=$data['CAT_USR'];
+        $nbPartiesJouees=$data['PARTIE_JOUEES'];
+        $nbVictoires=$data['PARTIE_GAGNEES'];
+        $nbDefaites=$data['PARTIE_PERDUES'];
+    }
+}
+else
+{
+    header('Location: index.php');
+}
 ?>
 
 <!doctype html>
@@ -11,7 +39,7 @@ include_once 'db/connexion_bdd.php';
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>TINTAS game !</title>
+    <title>Projet M1 I2L - Jeu TINTAS</title>
 
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -43,81 +71,78 @@ include_once 'db/connexion_bdd.php';
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item mx-0 mx-lg-1">
-                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="inscription.php">Inscription</a>
-                </li>
-                <li class="nav-item mx-0 mx-lg-1">
-                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="connexion.php">Connexion</a>
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="db/traitement_deconnexion.php">DÉCONNEXION</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
 <div class="text-white" style="padding-top: 0px; margin-top: 150px;">
-        <div class="row" style="margin-bottom: 15px">
-            <div class="col-md-3 text-center">
-                Mode de jeu souhaité :
-            </div>
-            <div class="col-md-6 text-center">
-                <button type="button" class="btn btn-primary" id="btn-1vs1" style="margin-right:5px">1 vs 1</button>
-                <button type="button" class="btn btn-success" style="margin-right:5px">Matchs aller/retour</button>
-                <button type="button" class="btn btn-warning">Le 4 à la suite</button>
-            </div>
+    <div class="row" style="margin-bottom: 15px">
+        <div class="col-md-3 text-center">
+            Mode de jeu souhaité :
         </div>
-        <div class="row">
-            <div class="col-lg-3">
-                <div class="panel panel-default text-center" style="padding-top:100px">
-                    <div class="panel-heading" style="font-weight: bold; font-size: 25px; margin-bottom: 30px">JOUEUR</div>
-                    <div class="panel-body">
-                        <div class="col-md-12" style="margin-bottom: 10px">
-                            Pseudo : ALBERT
-                        </div>
-                        <div class="col-md-12">
-                            Catégorie : ADULTE
-                        </div>
+        <div class="col-md-6 text-center">
+            <button type="button" class="btn btn-primary" id="btn-1vs1" style="margin-right:5px">1 vs 1</button>
+            <button type="button" class="btn btn-success" style="margin-right:5px">Matchs aller/retour</button>
+            <button type="button" class="btn btn-warning">Le 4 à la suite</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="panel panel-default text-center" style="padding-top:100px">
+                <div class="panel-heading" style="font-weight: bold; font-size: 25px; margin-bottom: 30px">JOUEUR</div>
+                <div class="panel-body">
+                    <div class="col-md-12" style="margin-bottom: 10px">
+                        Pseudo : <?php echo $pseudo; ?>
                     </div>
-                </div>
-                <div class="panel panel-default text-center" style="padding-top:50px">
-                    <div class="panel-heading" style="font-weight: bold; font-size: 25px; margin-bottom: 30px">STATISTIQUES</div>
-                    <div class="panel-body">
-                        <div class="col-md-12" style="margin-bottom: 10px">
-                            Nombre de parties jouées : 10
-                        </div>
-                        <div class="col-md-12">
-                            Victoires : 6
-                        </div>
-                        <div class="col-md-12">
-                            Défaites : 4
-                        </div>
+                    <div class="col-md-12">
+                        Catégorie : <?php if($categorie == 1) { echo "Adultes"; } else { echo "Enfants"; } ?>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div id="gameCanvas"></div>
-            </div>
-            <div class="col-lg-3">
-                <div class="panel panel-default text-center" style="padding-top:100px">
-                    <div class="panel-heading" style="font-weight: bold; font-size: 20px; margin-bottom: 30px">Gagnez des points facilement !</div>
-                    <div class="panel-body">
-                        <div class="col-lg-12 text-center">
-                            <iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2FTintas-Game-173850120023621%2F&width=163&layout=button_count&action=like&size=large&show_faces=true&share=true&height=46&appId"
-                                    width="163" height="46" style="border:none;overflow:hidden" scrolling="no" frameborder="0"
-                                    allowTransparency="true"></iframe>
-                        </div>
-                        <div class="col-lg-12 text-center">
-                            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
-                               data-show-count="false">Tweet</a>
-                            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                        </div>
-                        <div class="col-lg-12 text-center">
-                            <g:plusone size="tall"></g:plusone>
-                        </div>
+            <div class="panel panel-default text-center" style="padding-top:50px">
+                <div class="panel-heading" style="font-weight: bold; font-size: 25px; margin-bottom: 30px">STATISTIQUES</div>
+                <div class="panel-body">
+                    <div class="col-md-12" style="margin-bottom: 10px">
+                        Nombre de parties jouées : <?php echo $nbPartiesJouees; ?>
+                    </div>
+                    <div class="col-md-12">
+                        Victoires : <?php echo $nbVictoires; ?>
+                    </div>
+                    <div class="col-md-12">
+                        Défaites : <?php echo $nbDefaites; ?>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="form-group text-center" style="margin-bottom: 15px; margin-top: 15px">
-            <button type="button" class="btn btn-danger" style="margin-right:5px">Quitter la partie</button>
+        <div class="col-lg-6">
+            <div id="gameCanvas"></div>
         </div>
+        <div class="col-lg-3">
+            <div class="panel panel-default text-center" style="padding-top:100px">
+                <div class="panel-heading" style="font-weight: bold; font-size: 20px; margin-bottom: 30px">Gagnez des points facilement !</div>
+                <div class="panel-body">
+                    <div class="col-lg-12 text-center">
+                        <iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2FTintas-Game-173850120023621%2F&width=163&layout=button_count&action=like&size=large&show_faces=true&share=true&height=46&appId"
+                                width="163" height="46" style="border:none;overflow:hidden" scrolling="no" frameborder="0"
+                                allowTransparency="true"></iframe>
+                    </div>
+                    <div class="col-lg-12 text-center">
+                        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
+                           data-show-count="false">Tweet</a>
+                        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    </div>
+                    <div class="col-lg-12 text-center">
+                        <g:plusone size="tall"></g:plusone>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group text-center" style="margin-bottom: 15px; margin-top: 15px">
+        <button type="button" class="btn btn-danger" style="margin-right:5px">Quitter la partie</button>
+    </div>
 </div>
 
 </body>
