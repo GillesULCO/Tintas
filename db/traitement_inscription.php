@@ -18,6 +18,6 @@
             'password' => hash('sha512',$_POST['password']),
             'cat' => $categorie));
 
-        header('Location:./game.php');
+        header('Location:../game.php');
     }
 ?>
