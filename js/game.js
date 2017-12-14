@@ -43,6 +43,8 @@ window.onload = function() {
     // Le moteur du jeu
     var engine = new Engine();
 
+    var selection;
+
     // Chargement des assets
     function preload() {
         game.load.image('slot', 'img/slot.png');
@@ -54,6 +56,7 @@ window.onload = function() {
         game.load.image('slot_white', 'img/slot_white.png');
         game.load.image('slot_yellow', 'img/slot_yellow.png');
         game.load.image('slot_pion', 'img/slot_pion.png');
+        game.load.image('sélection', 'img/selection.png');
     }
 
     // Initialisation
@@ -118,6 +121,8 @@ window.onload = function() {
         }
 
         game.input.mouse.capture = true;
+        selection = game.add.sprite(0, 0, 'sélection');
+        hideSelection();
     }
 
     function update() {
@@ -128,9 +133,27 @@ window.onload = function() {
         sprite.loadTexture(textureName, 0);
     }
 
+    function hideSelection() {
+        selection.visible = false;
+    }
+
+    function showSelection() {
+        selection.visible = true;
+    }
+
+    function moveSelectionTo(x, y) {
+        selection.x = x;
+        selection.y = y;
+    }
+
+    function selectSprite(sprite) {
+        moveSelectionTo(sprite.worldPosition.x, sprite.worldPosition.y);
+        showSelection();
+    }
+
     function spriteClick(sprite, pointer) {
         if (pointer.leftButton.isDown) {
-            changeSpriteTexture(sprite, 'slot_pion');
+            selectSprite(sprite);
             console.log(sprite);
         }
     }
