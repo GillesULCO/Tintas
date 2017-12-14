@@ -17,5 +17,7 @@
             'mail' => $_POST['email'],
             'password' => hash('sha512',$_POST['password']),
             'cat' => $categorie));
+
+        header('Location:./game.php');
     }
 ?>
