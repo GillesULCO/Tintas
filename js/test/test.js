@@ -39,7 +39,7 @@ TintasTestCase.prototype.testStory2 = function () {
  * Test initialisation plateau : toutes les intersections initialisées + 7 couleurs par couleur
  */
 
-TintasTestCase.prototype.testStory3 = function() {
+TintasTestCase.prototype.testStory3 = function () {
     var engine = new Engine();
     assertTrue(engine.getIntersections().length === 49);
 
@@ -51,7 +51,7 @@ TintasTestCase.prototype.testStory3 = function() {
         nbColors[inter.getColor()]++;
     }
     var indexColor;
-    for (indexColor = 0; indexColor < 7 ; indexColor++){
+    for (indexColor = 0; indexColor < 7; indexColor++) {
         assertTrue(nbColors[indexColor] === 7);
     }
 };
@@ -60,7 +60,7 @@ TintasTestCase.prototype.testStory3 = function() {
  * Test Voisins d'une coordonnées
  */
 
-TintasTestCase.prototype.testStory4 = function(){
+TintasTestCase.prototype.testStory4 = function () {
     var engine = new Engine();
     var A3 = new Coordinates('A', 3);
     var A4 = new Coordinates('A', 4);
@@ -76,7 +76,8 @@ TintasTestCase.prototype.testStory4 = function(){
  * Test Mouvements
  */
 
-TintasTestCase.prototype.testStory4 = function(){
+
+TintasTestCase.prototype.testStory4 = function () {
     var engine = new Engine();
     var A3 = new Coordinates('A', 3);
     var A4 = new Coordinates('A', 4);
@@ -91,19 +92,27 @@ TintasTestCase.prototype.testStory4 = function(){
     assertTrue(voisins[2].equal(B3));
 };
 
-TintasTestCase.prototype.testStory5 = function(){
+
+TintasTestCase.prototype.testStory5 = function () {
     var engine = new Engine();
-    var currentPlayer = engine.getCurrentPlayer();
     var A3 = new Coordinates('A', 3);
     var inter_A3 = engine.getIntersection(A3);
     var B4 = new Coordinates('B', 4);
     var inter_B4 = engine.getIntersection(B4);
+
+    var currentPlayerBeforePut = engine.getCurrentPlayer();
     engine.putPiece(A3);
-    assertTrue(inter_A3.getColor() === Tintas.Color.BLACK);
+    var currentPlayerAfterPut = engine.getCurrentPlayer();
+
+    assertTrue(currentPlayerAfterPut != currentPlayerBeforePut);
 
     assertTrue(engine.isMoveValid(B4));
-    assertTrue(engine.move(B4));
-    assertTrue(currentPlayer == !engine.getCurrentPlayer());
+
+    var currentPlayerBeforeMove = engine.getCurrentPlayer();
+    engine.move(B4);
+    var currentPlayerAfterMove = engine.getCurrentPlayer();
+
+    assertTrue(currentPlayerAfterMove != currentPlayerBeforeMove);
     assertTrue(inter_A3.getState() === Tintas.State.VACANT);
     assertFalse(engine.move(A3));
     assertTrue(inter_B4.getState() === Tintas.State.FULL);
@@ -115,13 +124,14 @@ TintasTestCase.prototype.testStory5 = function(){
 /**
  * Test player earns pieces
  */
-TintasTestCase.prototype.testStory6 = function(){
+TintasTestCase.prototype.testStory6 = function () {
     var engine = new Engine();
     var A3 = new Coordinates('A', 3);
     var inter_A3 = engine.getIntersection(A3);
     var A3color = inter_A3.getColor();
+    var player = engine.getCurrentPlayer();
     engine.putPiece(A3);
-    assertTrue(engine.getPiecesPlayer(engine.getCurrentPlayer())[A3color] === 1);
+    assertTrue(engine.getPiecesPlayer(player)[A3color] === 1);
 };
 
 

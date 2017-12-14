@@ -65,6 +65,15 @@ var Engine = function () {
         }
     };
 
+    this.changePlayer = function(){
+        if(this.getCurrentPlayer() === Tintas.Player.PLAYER1) {
+            this.setCurrentPlayer(Tintas.Player.PLAYER2);
+        }else if(this.getCurrentPlayer() === Tintas.Player.PLAYER2) {
+            this.setCurrentPlayer(Tintas.Player.PLAYER1);
+        }
+
+    };
+
     this.putPiece = function (coordinate) {
         if (coordinate.isValid()) {
             var colorInter = this.getIntersection(coordinate).getColor();
@@ -72,6 +81,7 @@ var Engine = function () {
             this.getIntersection(this.positionPiece).setColor(Tintas.Color.BLACK);
             this.increaseColorPieceOfPlayer(colorInter);
             this.state = Tintas.StateEngine.IN_GAME;
+            this.changePlayer();
             if(this.endOfGame()){
                 this.state = Tintas.StateEngine.END_GAME;
             }
@@ -88,7 +98,7 @@ var Engine = function () {
         this.increaseColorPieceOfPlayer(newColor);
         this.getIntersection(newCoordinate).setColor(Tintas.Color.BLACK);
         this.setPositionPiece(newCoordinate);
-        this.currentPlayer = !this.currentPlayer;
+        this.changePlayer();
         if(this.getVoisins(newCoordinate).length === 0){
             this.state = Tintas.StateEngine.FIRST_TOUR;
         }
@@ -178,6 +188,10 @@ var Engine = function () {
         return this.currentPlayer;
     };
 
+    this.setCurrentPlayer = function(player) {
+        this.currentPlayer = player;
+    };
+
     this.getPiecesPlayer = function (player){
         if (player === Tintas.Player.PLAYER1)
             return this.piecesPlayer1;
@@ -200,7 +214,12 @@ var Engine = function () {
         this.intersections = [];
         this.state = Tintas.StateEngine.FIRST_TOUR;
         this.nbColors = [0, 0, 0, 0, 0, 0, 0];
-        this.currentPlayer = Math.floor(Math.random() * 2);
+        var randomPlayer = Math.floor(Math.random() * 2);
+        if(randomPlayer === 0){
+            this.currentPlayer=Tintas.Player.PLAYER1;
+        }else if(randomPlayer === 1){
+            this.currentPlayer=Tintas.Player.PLAYER2;
+        }
         this.positionPiece = null;
         this.piecesPlayer1 = [0, 0, 0, 0, 0, 0, 0];
         this.piecesPlayer2 = [0, 0, 0, 0, 0, 0, 0];
