@@ -61,6 +61,8 @@ window.onload = function() {
 
     // Initialisation
     function create() {
+        game.stage.backgroundColor = '#2c3e50';
+
         // Nombres de slots, Offset en y
         var slotData = [[2, 0],
             [5, HALF_SLOT_HEIGHT],
