@@ -10,7 +10,8 @@ CREATE TABLE IF NOT EXISTS `categories` (
 
 INSERT INTO `categories` (`ID_CAT`, `LABEL_CAT`) VALUES
 (1, 'Adultes'),
-(2, 'Enfants');
+(2, 'Enfants'),
+(3, 'Administrateur');
 
 CREATE TABLE IF NOT EXISTS `matchs` (
   `ID_USR` int(11) NOT NULL,
