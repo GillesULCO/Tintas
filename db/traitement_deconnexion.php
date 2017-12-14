@@ -1,7 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: hp
- * Date: 14/12/2017
- * Time: 15:11
- */
+/*
+	ON KILL LE COOKIE POUR DECONNECTER L'UTILISATEUR
+*/
+setcookie("cookieTintas",'',time()-1, '/');
+header('Location:../index.php');

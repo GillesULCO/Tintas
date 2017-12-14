@@ -71,7 +71,7 @@ else
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item mx-0 mx-lg-1">
-                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="inscription.php">DÉCONNEXION</a>
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="db/traitement_deconnexion.php">DÉCONNEXION</a>
                 </li>
             </ul>
         </div>
