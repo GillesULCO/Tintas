@@ -48,6 +48,11 @@ window.onload = function() {
 
     // Une référence vers le sprite pion
     var spritePion;
+    // Une référence vers le sprite sélectionné
+    var selectedSprite;
+
+    // Statut du jeu
+    var text;
 
     // Chargement des assets
     function preload() {
@@ -67,6 +72,8 @@ window.onload = function() {
     // Initialisation
     function create() {
         game.stage.backgroundColor = '#2c3e50';
+        var style = { font: "15px Arial", fill: "#ffffff", align: "left" };
+        text = game.add.text(10, 10, '', style);
 
         // Nombres de slots, Offset en y
         var slotData = [[2, 0],
@@ -132,14 +139,34 @@ window.onload = function() {
         hideSelection();
 
         game.add.button(game.world.width - 95, 550, 'valider', validerAction, this, 0, 0, 0);
+        updateText();
     }
 
     function validerAction() {
+        var state = engine.getState();
 
+        if (state === Tintas.StateEngine.FIRST_TOUR) {
+            if (engine.putPiece(selectedSprite.coordinates)) {
+                changeSpriteTexture(selectedSprite, 'slot_pion');
+                spritePion = selectedSprite;
+                updateText();
+                hideSelection();
+            }
+        } else if (state === Tintas.StateEngine.IN_GAME) {
+            if (engine.move(selectedSprite.coordinates)) {
+                changeSpriteTexture(selectedSprite, 'slot_pion');
+                changeSpriteTexture(spritePion, 'slot');
+                spritePion = selectedSprite;
+                updateText();
+                hideSelection();
+            }
+        }
     }
 
     function update() {
-
+        if (engine.getState() === Tintas.StateEngine.END_GAME) {
+            window.alert('HAHA');
+        }
     }
 
     function changeSpriteTexture(sprite, textureName) {
@@ -162,21 +189,38 @@ window.onload = function() {
     function selectSprite(sprite) {
         moveSelectionTo(sprite.worldPosition.x, sprite.worldPosition.y);
         showSelection();
+        selectedSprite = sprite;
     }
 
     function spriteClick(sprite, pointer) {
         if (pointer.leftButton.isDown) {
-            leftClick(sprite);
+            selectSprite(sprite);
         }
     }
 
-    function leftClick(sprite) {
-        var state = engine.getCurrentState();
+    function updateText() {
+        var joueurCourant = engine.getCurrentPlayer();
+        var state = engine.getState();
 
-        if (engine.putPiece(sprite.coordinates)) {
-            changeSpriteTexture(sprite, 'slot_pion');
+        if (state === Tintas.StateEngine.FIRST_TOUR) {
+            if (joueurCourant === Tintas.Player.PLAYER1) {
+                text.setText("Placement du pion Joueur 1");
+            } else {
+                text.setText("Placement du pion Joueur 2");
+            }
+        } else if (state === Tintas.StateEngine.IN_GAME) {
+            if (joueurCourant === Tintas.Player.PLAYER1) {
+                text.setText("Tour: Joueur 1");
+            } else {
+                text.setText("Tour: Joueur 2");
+            }
+        } else if (state === Tintas.StateEngine.END_GAME) {
+            if (joueurCourant === Tintas.Player.PLAYER1) {
+                text.setText("Le joueur 1 a gagné la partie");
+            } else {
+                text.setText("Le joueur 2 a gagné la partie");
+            }
         }
-
     }
 
     function render() {
