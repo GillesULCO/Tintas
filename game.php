@@ -20,7 +20,8 @@ include_once 'db/connexion_bdd.php';
           type="text/css">
     <link href="css/freelancer.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-
+    <script type="text/javascript" src="vendor/phaser/phaser.js"></script>
+    <script type="text/javascript" src="js/game.js"></script>
     <script type="text/javascript" src="https://apis.google.com/js/plusone.js">
         {lang: 'fr'}
     </script>
@@ -46,6 +47,17 @@ include_once 'db/connexion_bdd.php';
         </div>
     </div>
 </nav>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3">
+        </div>
+        <div class="col-lg-6">
+            <div id="gameCanvas"></div>
+        </div>
+        <div class="col-lg-3">
+        </div>
+    </div>
+</div>
 <div class="footer">
     <div class="container">
         <div class="row">
