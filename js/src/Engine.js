@@ -136,10 +136,10 @@ var Engine = function () {
         var i;
         var count = 0;
         for (i=0; i < arrayPieces.length ; i++){
-            if(arrayPieces[i] === 4)
+            if(arrayPieces[i] >= 4)
                 count ++;
         }
-        return count === 4;
+        return count >= 4;
     };
 
     this.isMoveValid = function (newCoordinate) {
