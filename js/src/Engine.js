@@ -1,6 +1,6 @@
 "use strict";
 
-Tintas.Player = {PLAYER1: 0, PLAYER2: 1};
+Tintas.Player = {PLAYER1: 0, PLAYER2: 1, NUL: 3};
 Tintas.StateEngine = {FIRST_TOUR: 0, IN_GAME:1, END_GAME:2};
 
 var Engine = function () {
@@ -77,17 +77,18 @@ var Engine = function () {
     this.putPiece = function (coordinate) {
         if (coordinate.isValid() && this.getIntersection(coordinate).getState() !== Tintas.State.VACANT && this.getIntersection(coordinate).getColor() !== Tintas.Color.BLACK) {
             var colorInter = this.getIntersection(coordinate).getColor();
-            if(this.positionPiece !== null){
+            if(this.positionPiece){
                 this.getIntersection(this.positionPiece).setColor(Tintas.Color.TRANSPARENT);
             }
             this.positionPiece = coordinate;
             this.getIntersection(this.positionPiece).setColor(Tintas.Color.BLACK);
             this.increaseColorPieceOfPlayer(colorInter);
             this.state = Tintas.StateEngine.IN_GAME;
-            this.changePlayer();
             if(this.endOfGame()){
                 this.state = Tintas.StateEngine.END_GAME;
+                return true;
             }
+            this.changePlayer();
             return true;
         }
         return false;
@@ -101,13 +102,14 @@ var Engine = function () {
         this.increaseColorPieceOfPlayer(newColor);
         this.getIntersection(newCoordinate).setColor(Tintas.Color.BLACK);
         this.setPositionPiece(newCoordinate);
-        this.changePlayer();
         if(this.getVoisins(newCoordinate).length === 0){
             this.state = Tintas.StateEngine.FIRST_TOUR;
         }
         if(this.endOfGame()){
             this.state = Tintas.StateEngine.END_GAME;
+            return true;
         }
+        this.changePlayer();
         return true;
     };
 
@@ -120,7 +122,26 @@ var Engine = function () {
             this.currentPlayer = Tintas.Player.PLAYER2;
             return true;
         }
+        if(this.emptyEngine()){
+            this.currentPlayer = Tintas.Player.NUL;
+            return true;
+        }
         return false;
+    };
+
+    this.emptyEngine = function(){
+      var i;
+      var inters = this.getIntersections();
+      var nbTransparent = 0 ;
+      var nbBlack = 0;
+      for (i=0; i<inters.length; i++){
+          if(inters[i].getColor() === Tintas.Color.TRANSPARENT)
+              nbTransparent++;
+          if(inters[i].getColor() === Tintas.Color.TRANSPARENT)
+              nbBlack++;
+      }
+
+      return (nbBlack === 1 && nbTransparent === 48);
     };
 
     this._7Pieces = function(arrayPieces){
