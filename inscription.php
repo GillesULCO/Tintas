@@ -48,19 +48,19 @@
     <div class="col-lg-6 offset-lg-3">
         <div class="jumbotron jumbotron-fluid">
             <div class="container">
-                <h1 id="title_inscription" class="display-3">Inscription</h1>
+                <h1 class="display-3" id="title_inscription">Inscription</h1>
                 <form action="db/traitement_inscription.php" method="post">
                     <div class="form-group">
                         <label for="name">Nom<red>*</red></label>
-                        <input type="text" class="form-control" name="name" required>
+                        <input type="text" class="form-control form-control-sm" name="name" required>
                     </div>
                     <div class="form-group">
                         <label for="firstName">Prénom<red>*</red></label>
-                        <input type="text" class="form-control" name="firstName" required>
+                        <input type="text" class="form-control form-control-sm" name="firstName" required>
                     </div>
                     <div class="form-group">
                         <label for="age">Age<red>*</red></label>
-                        <select class="form-control" name="age">
+                        <select class="form-control form-control-sm" name="age">
                             <?php
                                 for($i = 1; $i < 111; $i++){
                                     echo '<option value="' . $i . '">' . $i . '</option>';
@@ -70,19 +70,19 @@
                     </div>
                     <div class="form-group">
                         <label for="pseudo">Pseudo<red>*</red></label>
-                        <input type="text" class="form-control" name="pseudo" required>
+                        <input type="text" class="form-control form-control-sm" name="pseudo" required>
                     </div>
                     <div class="form-group">
                         <label for="name">Adresse mail<red>*</red></label>
-                        <input type="email" class="form-control" name="email" required>
+                        <input type="email" class="form-control form-control-sm" name="email" required>
                     </div>
                     <div class="form-group">
                         <label for="password">Mot de passe<red>*</red></label>
-                        <input type="password" class="form-control" name="password" required>
+                        <input type="password" class="form-control form-control-sm" name="password" required>
                     </div>
                     <div class="form-group">
                         <label for="repeatPassword">Confirmer le mot de passe<red>*</red></label>
-                        <input type="password" class="form-control" name="repeatPassword" required>
+                        <input type="password" class="form-control form-control-sm" name="repeatPassword" required>
                     </div>
                     <div class="text-center">
                         <button type="submit" id="centerButton" class="btn btn-primary">S'inscrire</button>

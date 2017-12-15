@@ -4,6 +4,7 @@ body{
 
 #title_inscription{
     text-align: center;
+    font-style: 53px;
 }
 
 #centerButton{
@@ -22,7 +23,7 @@ red{
 }
 
 #contmargin{
-    margin-top:29px;
+    margin-top:6%;
 }
 
 #margintopcontainer{
@@ -69,4 +70,8 @@ h1{
 
 #rowCatUsers{
     margin-top: 5%;
+}
+
+.display-3{
+    font-size: 75px;
 }
