@@ -249,10 +249,10 @@ window.onload = function() {
     }
 
     function validerAction() {
-        if (eventsBlocked || selectedSprite === null) {
+        if (eventsBlocked || selectedSprite === null || selectedSprite === undefined) {
             return;
         }
-
+        
         var state = engine.getState();
 
         if (state === Tintas.StateEngine.FIRST_TOUR) {
