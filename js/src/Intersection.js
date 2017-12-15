@@ -6,7 +6,7 @@ Tintas.Color = {WHITE: 0, RED: 1, PURPLE: 2, ORANGE: 3, YELLOW: 4, BLUE: 5, GREE
 var Intersection = function (coordinate, color) {
 
     this.getCoord = function() {
-        return coordinate;
+        return this.coord;
     };
 
     this.getLine = function() {
@@ -43,6 +43,7 @@ var Intersection = function (coordinate, color) {
     };
 
     this.init = function () {
+        this.coord = coordinate;
         if(color === null || color === undefined) {
             this.state = Tintas.State.VACANT;
             this.color = Tintas.Color.TRANSPARENT;
