@@ -78,7 +78,7 @@ else
     </div>
 </nav>
 <div class="text-white" style="padding-top: 0px; margin-top: 150px;">
-    <div class="row" style="margin-bottom: 15px">
+    <!--<div class="row" style="margin-bottom: 15px">
         <div class="col-md-3 text-center">
             Mode de jeu souhaité :
         </div>
@@ -86,7 +86,7 @@ else
             <button type="button" class="btn btn-primary" id="btn-1vs1" style="margin-right:5px">1 vs 1</button>
             <button type="button" class="btn btn-success" id="btn-1vsIA" style="margin-right:5px">Match contre IA</button>
         </div>
-    </div>
+    </div>-->
     <div class="row">
         <div class="col-lg-3">
             <div class="panel panel-default text-center" style="padding-top:100px">
@@ -143,7 +143,7 @@ else
                 <div class="panel-body">
                     <table class="table table-bordered" style="width: 70%; margin-left: 50px;">
                         <?php
-                            $query="SELECT PSEUDO_USR, POINTS FROM users ORDER BY POINTS desc";
+                            $query="SELECT PSEUDO_USR, POINTS FROM users WHERE CAT_USR <> 3 ORDER BY POINTS desc";
                             foreach  ($pdo->query($query) as $row) {
                                 echo '<tr ><td class="col-md-6">' . $row["PSEUDO_USR"] . '</td><td class="col-md-6">' . $row["POINTS"] . '</td></tr>';
                             }
