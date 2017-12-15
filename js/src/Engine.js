@@ -113,6 +113,7 @@ var Engine = function (mode) {
                 intersValid.push(inters[i]);
             }
         }
+        return intersValid;
     };
 
     this._putPiece = function(coordinate){
