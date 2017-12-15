@@ -61,6 +61,12 @@ window.onload = function() {
     // Flag requête AJAX
     var requestSend = false;
 
+    // Flag sur l'état de la partie en cours
+    var gameFinished = false;
+
+    // Le delta time pour le délai avant le refresh de la page
+    var delta = 0;
+
     // Chargement des assets
     function preload() {
         game.load.image('slot', 'img/slot.png');
@@ -220,24 +226,33 @@ window.onload = function() {
     }
 
     function update() {
-        if (engine.getState() === Tintas.StateEngine.END_GAME && !requestSend) {
-            requestSend = true;
+        if (!gameFinished) {
+            if (engine.getState() === Tintas.StateEngine.END_GAME && !requestSend) {
+                requestSend = true;
 
-            var _winner = engine.getCurrentPlayer();
-            var user_id = document.getElementById('user_id').value;
-            var data = {
-                "_winner" : _winner,
-                "id": user_id
-            };
-            $.ajax({
-                data : data,
-                type: "post",
-                url : "db/traitement_end_game.php",
-                success: function(data) {
-                    // redirection vers la page jeu
-                    document.location.href = "game.php";
-                }
-            });
+                var _winner = engine.getCurrentPlayer();
+                var user_id = document.getElementById('user_id').value;
+                var data = {
+                    "_winner" : _winner,
+                    "id": user_id
+                };
+                $.ajax({
+                    data : data,
+                    type: "post",
+                    url : "db/traitement_end_game.php",
+                    success: function(data) {
+                    }
+                });
+
+                endOfGame();
+            }
+        } else {
+            delta += game.time.elapsed / 1000;
+
+            if (delta > 3) {
+                // redirection vers la page jeu
+                document.location.href = "game.php";
+            }
         }
     }
 
@@ -311,6 +326,32 @@ window.onload = function() {
         for (var i = 0; i < pieces.length; i++) {
             counters[i].setText(pieces[i]);
         }
+    }
+
+    function endOfGame() {
+        // Suppression des assets
+        game.world.removeAll();
+
+        // Affichage d'un message final
+        var style = { font: "30px Arial", fill: "#fff"};
+
+        var endTextX = game.world.centerX;
+        var endTextY = game.world.centerY;
+        var endText;
+        var winner = engine.getCurrentPlayer();
+
+        if (winner === Tintas.Player.PLAYER1) {
+            endText = game.add.text(endTextX, endTextY, 'Le joueur 1 a gagné la partie !', style);
+        } else if (winner === Tintas.Player.PLAYER2) {
+            endText = game.add.text(endTextX, endTextY, 'Le joueur 2 a gagné la partie !', style);
+        } else {
+            endText = game.add.text(endTextX, endTextY, 'Match nul !', style);
+        }
+
+        endText.setShadow(3, 3, 'rgba(0,0,0,0.5)', 2);
+        endText.anchor.setTo(0.5);
+
+        gameFinished = true;
     }
 
     function render() {
