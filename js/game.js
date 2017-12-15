@@ -41,7 +41,7 @@ window.onload = function() {
         update: update, render : render});
 
     // Le moteur du jeu
-    var engine = new Engine();
+    var engine;
 
     // La sélection courante
     var selection;
@@ -67,6 +67,11 @@ window.onload = function() {
     // Le delta time pour le délai avant le refresh de la page
     var delta = 0;
 
+    // Élements du menu principal
+    var titleText;
+    var button1V1;
+    var buttonIA;
+
     // Chargement des assets
     function preload() {
         game.load.image('slot', 'img/slot.png');
@@ -88,6 +93,11 @@ window.onload = function() {
         game.load.image('piece_red', 'img/piece_red.png');
         game.load.image('piece_white', 'img/piece_white.png');
         game.load.image('piece_yellow', 'img/piece_yellow.png');
+
+        game.load.image('button_1vs1', 'img/bouton_1vs1.png');
+        game.load.image('button_ia', 'img/bouton_ia.png');
+
+        game.load.spritesheet('mode_button', 'img/bouton_mode_spritesheet.png', 200, 80);
     }
 
     function addPiecesHUD(startPieceY, pieceOffset) {
@@ -121,6 +131,34 @@ window.onload = function() {
 
     // Initialisation
     function create() {
+        // Initialisation du mode de sélection
+        game.stage.backgroundColor = '#2c3e50';
+
+        var style = { font: "60px Arial", fill: "#ffffff", align: "left" };
+        titleText = game.add.text(game.world.centerX, game.world.centerY - 200, 'Tintas', style);
+        titleText.anchor.set(0.5);
+
+        button1V1 = game.add.button(game.world.centerX - 100, game.world.centerY - 100, 'mode_button', select1vs1, this, 1, 0, 0);
+        buttonIA = game.add.button(game.world.centerX - 100, game.world.centerY, 'mode_button', selectIA, this, 3, 2, 2);
+    }
+
+    function select1vs1() {
+        initBoard(Tintas.Mode._1V1);
+    }
+
+    function selectIA() {
+        initBoard(Tintas.Mode._IA);
+    }
+
+    // Initialisation du plateau du jeu
+    function initBoard(mode) {
+        // Suppression des éléments du menu sélection
+        titleText.destroy();
+        button1V1.destroy();
+        buttonIA.destroy();
+        
+        engine = new Engine(mode);
+
         game.stage.backgroundColor = '#2c3e50';
         var style = { font: "15px Arial", fill: "#ffffff", align: "left" };
         text = game.add.text(10, 10, '', style);
@@ -234,6 +272,9 @@ window.onload = function() {
     }
 
     function update() {
+        if (engine === null || engine === undefined)
+            return;
+
         if (!gameFinished) {
             if (engine.getState() === Tintas.StateEngine.END_GAME && !requestSend) {
                 requestSend = true;
