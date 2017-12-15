@@ -207,7 +207,13 @@ window.onload = function() {
 
         if (state === Tintas.StateEngine.FIRST_TOUR) {
             if (engine.putPiece(selectedSprite.coordinates)) {
+                // Le pion a déjà été placé
+                if (spritePion !== undefined && spritePion !== null) {
+                    changeSpriteTexture(spritePion, 'slot');
+                }
+                // Placement du pion
                 changeSpriteTexture(selectedSprite, 'slot_pion');
+                // Sauvegarde l'emplacement courant pour pouvoir l'effacer au tour suivant
                 spritePion = selectedSprite;
                 updateText();
                 updatePiecesCounter();
@@ -215,7 +221,9 @@ window.onload = function() {
             }
         } else if (state === Tintas.StateEngine.IN_GAME) {
             if (engine.move(selectedSprite.coordinates)) {
+                // Place le pion
                 changeSpriteTexture(selectedSprite, 'slot_pion');
+                // Efface l'emplacement précédent du pion
                 changeSpriteTexture(spritePion, 'slot');
                 spritePion = selectedSprite;
                 updateText();
@@ -247,9 +255,9 @@ window.onload = function() {
                 endOfGame();
             }
         } else {
-            delta += game.time.elapsed / 1000;
+            delta += game.time.elapsed / 1000; // conversion en secondes
 
-            if (delta > 3) {
+            if (delta >= 3) { // Après 3 secondes
                 // redirection vers la page jeu
                 document.location.href = "game.php";
             }
