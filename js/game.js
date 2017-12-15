@@ -72,6 +72,12 @@ window.onload = function() {
     var button1V1;
     var buttonIA;
 
+    // Le delta time pour le délai avant l'action de l'IA
+    var deltaIA = 0;
+
+    // Évènements bloqué lors du tour de l'IA
+    var eventsBlocked = false;
+
     // Chargement des assets
     function preload() {
         game.load.image('slot', 'img/slot.png');
@@ -93,9 +99,6 @@ window.onload = function() {
         game.load.image('piece_red', 'img/piece_red.png');
         game.load.image('piece_white', 'img/piece_white.png');
         game.load.image('piece_yellow', 'img/piece_yellow.png');
-
-        game.load.image('button_1vs1', 'img/bouton_1vs1.png');
-        game.load.image('button_ia', 'img/bouton_ia.png');
 
         game.load.spritesheet('mode_button', 'img/bouton_mode_spritesheet.png', 200, 80);
     }
@@ -241,6 +244,10 @@ window.onload = function() {
     }
 
     function validerAction() {
+        if (eventsBlocked) {
+            return;
+        }
+
         var state = engine.getState();
 
         if (state === Tintas.StateEngine.FIRST_TOUR) {
@@ -272,36 +279,83 @@ window.onload = function() {
     }
 
     function update() {
+        // Menu de sélection
         if (engine === null || engine === undefined)
             return;
 
+        if (engine.getMode() === Tintas.Mode._1V1) {
+            update1vs1();
+        } else if (engine.getMode() === Tintas.Mode._IA) {
+            updateIA();
+        }
+    }
+
+    function sendEndGameRequest() {
+        requestSend = true;
+
+        var _winner = engine.getCurrentPlayer();
+        var user_id = document.getElementById('user_id').value;
+        var data = {
+            "_winner" : _winner,
+            "id": user_id
+        };
+        $.ajax({
+            data : data,
+            type: "post",
+            url : "db/traitement_end_game.php",
+            success: function(data) {
+            }
+        });
+    }
+
+    function updateTimerRedirection() {
+        delta += game.time.elapsed / 1000; // conversion en secondes
+
+        if (delta >= 3) { // Après 3 secondes
+            // redirection vers la page jeu
+            document.location.href = "game.php";
+        }
+    }
+
+    function updateIA() {
         if (!gameFinished) {
             if (engine.getState() === Tintas.StateEngine.END_GAME && !requestSend) {
-                requestSend = true;
+                sendEndGameRequest();
+                endOfGame();
+            } else {
+                var currentPlayer = engine.getCurrentPlayer();
 
-                var _winner = engine.getCurrentPlayer();
-                var user_id = document.getElementById('user_id').value;
-                var data = {
-                    "_winner" : _winner,
-                    "id": user_id
-                };
-                $.ajax({
-                    data : data,
-                    type: "post",
-                    url : "db/traitement_end_game.php",
-                    success: function(data) {
+                if (currentPlayer === Tintas.Player.PLAYER2) {
+                    // Bloque l'interaction de l'humain
+                    if (!eventsBlocked) {
+                        eventsBlocked = true;
                     }
-                });
 
+                    deltaIA += game.time.elapsed / 1000;
+
+                    if (deltaIA >= 3) {
+                        engine.move();
+                        deltaIA = 0;
+                    }
+                } else {
+                    if (eventsBlocked) {
+                        eventsBlocked = false;
+                    }
+                }
+            }
+        } else {
+            updateTimerRedirection();
+        }
+    }
+
+    function update1vs1() {
+        if (!gameFinished) {
+            if (engine.getState() === Tintas.StateEngine.END_GAME && !requestSend) {
+                sendEndGameRequest();
                 endOfGame();
             }
         } else {
-            delta += game.time.elapsed / 1000; // conversion en secondes
-
-            if (delta >= 3) { // Après 3 secondes
-                // redirection vers la page jeu
-                document.location.href = "game.php";
-            }
+            updateTimerRedirection();
         }
     }
 
@@ -329,6 +383,10 @@ window.onload = function() {
     }
 
     function spriteClick(sprite, pointer) {
+        if (eventsBlocked) {
+            return;
+        }
+
         if (pointer.leftButton.isDown) {
             selectSprite(sprite);
         }
