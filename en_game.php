@@ -31,7 +31,7 @@ else
 ?>
 
 <!doctype html>
-<html lang="fr">
+<html lang="en">
 <head>
 
     <meta charset="utf-8">
@@ -39,7 +39,7 @@ else
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Projet M1 I2L - Jeu TINTAS</title>
+    <title>Projet M1 I2L - TINTAS Game</title>
 
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -63,7 +63,7 @@ else
 <body>
 <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
     <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="game.php">DIETER STAIN</a>
+        <a class="navbar-brand js-scroll-trigger" href="en_game.php">DIETER STAIN</a>
         <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             Menu
             <i class="fa fa-bars"></i>
@@ -71,10 +71,10 @@ else
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item mx-0 mx-lg-1">
-                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="db/traitement_deconnexion.php">DÉCONNEXION</a>
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="db/en_traitement_deconnexion.php">Log out</a>
                 </li>
                 <li class="nav-item mx-0 mx-lg-1">
-                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="en_game.php"><img src="img/usa.png"></a>
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="game.php"><img src="img/fr.png"></a>
                 </li>
             </ul>
         </div>
@@ -87,34 +87,34 @@ else
         </div>
         <div class="col-md-6 text-center">
             <button type="button" class="btn btn-primary" id="btn-1vs1" style="margin-right:5px">1 vs 1</button>
-            <button type="button" class="btn btn-success" id="btn-1vsIA" style="margin-right:5px">Match contre IA</button>
+            <button type="button" class="btn btn-success" id="btn-1vsIA" style="margin-right:5px">Match against IA</button>
         </div>
     </div>-->
     <div class="row">
         <div class="col-lg-3">
             <div class="panel panel-default text-center" style="padding-top:100px">
-                <div class="panel-heading" style="font-weight: bold; font-size: 25px; margin-bottom: 30px">JOUEUR</div>
+                <div class="panel-heading" style="font-weight: bold; font-size: 25px; margin-bottom: 30px">PLAYER</div>
                 <div class="panel-body">
                     <div class="col-md-12" style="margin-bottom: 10px">
                         Pseudo : <?php echo $pseudo; ?>
                     </div>
                     <div class="col-md-12">
-                        Catégorie : <?php if($categorie == 1) { echo "Adultes"; } else { echo "Enfants"; } ?>
+                        Category : <?php if($categorie == 1) { echo "Adults"; } else { echo "Childrens"; } ?>
                     </div>
                     <input id="user_id" type="hidden" value="<?php echo $id?>" />
                 </div>
             </div>
             <div class="panel panel-default text-center" style="padding-top:100px">
-                <div class="panel-heading" style="font-weight: bold; font-size: 25px; margin-bottom: 30px">STATISTIQUES</div>
+                <div class="panel-heading" style="font-weight: bold; font-size: 25px; margin-bottom: 30px">STATISTICS</div>
                 <div class="panel-body">
                     <div class="col-md-12" style="margin-bottom: 10px">
-                        Nombre de parties jouées : <?php echo $nbPartiesJouees; ?>
+                        Number of games played: <?php echo $nbPartiesJouees; ?>
                     </div>
                     <div class="col-md-12">
-                        Victoires : <?php echo $nbVictoires; ?>
+                        Victories : <?php echo $nbVictoires; ?>
                     </div>
                     <div class="col-md-12">
-                        Défaites : <?php echo $nbDefaites; ?>
+                        Defeats : <?php echo $nbDefaites; ?>
                     </div>
                 </div>
             </div>
@@ -124,7 +124,7 @@ else
         </div>
         <div class="col-lg-3">
             <div class="panel panel-default text-center" style="padding-top:100px">
-                <div class="panel-heading" style="font-weight: bold; font-size: 20px; margin-bottom: 30px">Gagnez des points facilement !</div>
+                <div class="panel-heading" style="font-weight: bold; font-size: 20px; margin-bottom: 30px">Earn points easily!</div>
                 <div class="panel-body">
                     <div class="col-lg-12 text-center">
                         <iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2FTintas-Game-173850120023621%2F&width=163&layout=button_count&action=like&size=large&show_faces=true&share=true&height=46&appId"
@@ -142,14 +142,14 @@ else
                 </div>
             </div>
             <div class="panel panel-default text-center" style="padding-top:50px">
-                <div class="panel-heading" style="font-weight: bold; font-size: 25px; margin-bottom: 30px">CLASSEMENT</div>
+                <div class="panel-heading" style="font-weight: bold; font-size: 25px; margin-bottom: 30px">RANKING</div>
                 <div class="panel-body">
                     <table class="table table-bordered" style="width: 70%; margin-left: 50px;">
                         <?php
-                            $query="SELECT PSEUDO_USR, POINTS FROM users WHERE CAT_USR <> 3 ORDER BY POINTS desc";
-                            foreach  ($pdo->query($query) as $row) {
-                                echo '<tr ><td class="col-md-6">' . $row["PSEUDO_USR"] . '</td><td class="col-md-6">' . $row["POINTS"] . '</td></tr>';
-                            }
+                        $query="SELECT PSEUDO_USR, POINTS FROM users WHERE CAT_USR <> 3 ORDER BY POINTS desc";
+                        foreach  ($pdo->query($query) as $row) {
+                            echo '<tr ><td class="col-md-6">' . $row["PSEUDO_USR"] . '</td><td class="col-md-6">' . $row["POINTS"] . '</td></tr>';
+                        }
                         ?>
                     </table>
                 </div>
@@ -157,7 +157,7 @@ else
         </div>
     </div>
     <div class="form-group text-center" style="margin-bottom: 15px; margin-top: 15px">
-        <button type="button" class="btn btn-danger" id="new-game" style="margin-right:5px">Nouvelle partie</button>
+        <button type="button" class="btn btn-danger" id="new-game" style="margin-right:5px">New game</button>
     </div>
 </div>
 
