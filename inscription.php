@@ -1,3 +1,7 @@
+<?php
+error_reporting(0);
+?>
+
 <!doctype html>
 <html lang="fr">
 <head>
@@ -65,12 +69,19 @@
                         <label for="age">Age<red>*</red></label>
                         <select class="form-control form-control-sm" name="age">
                             <?php
-                                for($i = 1; $i < 111; $i++){
-                                    echo '<option value="' . $i . '">' . $i . '</option>';
-                                }
+                            for($i = 1; $i < 111; $i++){
+                                echo '<option value="' . $i . '">' . $i . '</option>';
+                            }
                             ?>
                         </select>
                     </div>
+                    <?php
+                    if($_GET['error'] == 1){
+                        echo '<red>Ce pseudo est déjà utilisé</red>';
+                    }else{
+
+                    }
+                    ?>
                     <div class="form-group">
                         <label for="pseudo">Pseudo<red>*</red></label>
                         <input type="text" class="form-control form-control-sm" name="pseudo" required>
@@ -97,4 +108,3 @@
 </div>
 </body>
 </html>
-

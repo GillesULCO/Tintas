@@ -1,7 +1,13 @@
 <?php
 
-    include_once 'connexion_bdd.php';
+include_once 'connexion_bdd.php';
 
+$querySelectUser = $pdo -> prepare("SELECT ID_USR FROM USERS WHERE PSEUDO_USR = :pseudo");
+$querySelectUser -> execute(array('pseudo' => $_POST['pseudo']));
+
+if($count = $querySelectUser->rowCount() > 0){
+    header('Location:../inscription.php?error=1');
+}else{
     if($_POST['age'] > 15){
         $categorie = 1;
     }else{
@@ -20,4 +26,5 @@
 
         header('Location:../connexion.php');
     }
+}
 ?>
