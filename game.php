@@ -84,8 +84,7 @@ else
         </div>
         <div class="col-md-6 text-center">
             <button type="button" class="btn btn-primary" id="btn-1vs1" style="margin-right:5px">1 vs 1</button>
-            <button type="button" class="btn btn-success" style="margin-right:5px">Matchs aller/retour</button>
-            <button type="button" class="btn btn-warning">Le 4 à la suite</button>
+            <button type="button" class="btn btn-success" id="btn-1vsIA" style="margin-right:5px">Match contre IA</button>
         </div>
     </div>
     <div class="row">
