@@ -1,3 +1,7 @@
+<?php
+error_reporting(0);
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -71,6 +75,13 @@
                             ?>
                         </select>
                     </div>
+                    <?php
+                    if($_GET['error'] == 1){
+                        echo '<red>This pseudo is already used</red>';
+                    }else{
+
+                    }
+                    ?>
                     <div class="form-group">
                         <label for="pseudo">Pseudo<red>*</red></label>
                         <input type="text" class="form-control form-control-sm" name="pseudo" required>
