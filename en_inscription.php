@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -27,7 +27,7 @@
 <body>
 <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
     <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="index.php">DIETER STAIN</a>
+        <a class="navbar-brand js-scroll-trigger" href="en_index.php">DIETER STAIN</a>
         <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             Menu
             <i class="fa fa-bars"></i>
@@ -38,10 +38,10 @@
 
                 </li>
                 <li class="nav-item mx-0 mx-lg-1">
-                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="connexion.php">Connexion</a>
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="en_connexion.php">Log in</a>
                 </li>
                 <li class="nav-item mx-0 mx-lg-1">
-                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="en_inscription.php"><img src="img/usa.png"></a>
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="inscription.php"><img src="img/fr.png"></a>
                 </li>
             </ul>
         </div>
@@ -51,23 +51,23 @@
     <div class="col-lg-6 offset-lg-3">
         <div class="jumbotron jumbotron-fluid">
             <div class="container">
-                <h1 class="display-3" id="title_inscription">Inscription</h1>
-                <form action="db/traitement_inscription.php" method="post">
+                <h1 class="display-3" id="title_inscription">Registration</h1>
+                <form action="db/en_traitement_inscription.php" method="post">
                     <div class="form-group">
-                        <label for="name">Nom<red>*</red></label>
+                        <label for="name">Name<red>*</red></label>
                         <input type="text" class="form-control form-control-sm" name="name" required>
                     </div>
                     <div class="form-group">
-                        <label for="firstName">Prénom<red>*</red></label>
+                        <label for="firstName">First name<red>*</red></label>
                         <input type="text" class="form-control form-control-sm" name="firstName" required>
                     </div>
                     <div class="form-group">
                         <label for="age">Age<red>*</red></label>
                         <select class="form-control form-control-sm" name="age">
                             <?php
-                                for($i = 1; $i < 111; $i++){
-                                    echo '<option value="' . $i . '">' . $i . '</option>';
-                                }
+                            for($i = 1; $i < 111; $i++){
+                                echo '<option value="' . $i . '">' . $i . '</option>';
+                            }
                             ?>
                         </select>
                     </div>
@@ -76,19 +76,19 @@
                         <input type="text" class="form-control form-control-sm" name="pseudo" required>
                     </div>
                     <div class="form-group">
-                        <label for="name">Adresse mail<red>*</red></label>
+                        <label for="name">Mail address<red>*</red></label>
                         <input type="email" class="form-control form-control-sm" name="email" required>
                     </div>
                     <div class="form-group">
-                        <label for="password">Mot de passe<red>*</red></label>
+                        <label for="password">Password<red>*</red></label>
                         <input type="password" class="form-control form-control-sm" name="password" required>
                     </div>
                     <div class="form-group">
-                        <label for="repeatPassword">Confirmer le mot de passe<red>*</red></label>
+                        <label for="repeatPassword">Repeat password<red>*</red></label>
                         <input type="password" class="form-control form-control-sm" name="repeatPassword" required>
                     </div>
                     <div class="text-center">
-                        <button type="submit" id="centerButton" class="btn btn-primary">S'inscrire</button>
+                        <button type="submit" id="centerButton" class="btn btn-primary">Register</button>
                     </div>
                 </form>
             </div>
