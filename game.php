@@ -143,7 +143,7 @@ else
                 <div class="panel-body">
                     <table class="table table-bordered" style="width: 70%; margin-left: 50px;">
                         <?php
-                            $query="SELECT PSEUDO_USR, POINTS FROM users ORDER BY POINTS desc";
+                            $query="SELECT PSEUDO_USR, POINTS FROM users WHERE ID_CAT <> 3 ORDER BY POINTS desc";
                             foreach  ($pdo->query($query) as $row) {
                                 echo '<tr ><td class="col-md-6">' . $row["PSEUDO_USR"] . '</td><td class="col-md-6">' . $row["POINTS"] . '</td></tr>';
                             }
