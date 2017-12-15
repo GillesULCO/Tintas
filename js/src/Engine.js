@@ -56,6 +56,14 @@ var Engine = function (mode) {
         return this.state;
     };
 
+    /*this.getLastColor = function(){
+        return this.lastColor;
+    };
+
+    this.isSamePlayer = function(){
+        return this.samePlayer;
+    };*/
+
     this.increaseColorPieceOfPlayer = function (color) {
         if (color < 7) {
             if (this.getCurrentPlayer() === Tintas.Player.PLAYER1)
@@ -78,7 +86,11 @@ var Engine = function (mode) {
         if(this.getMode() === Tintas.Mode._1V1) {
             return this._putPiece(coordinate);
         }else if(this.getMode() === Tintas.Mode._IA){
-            return this._putPieceIA();
+            if(this.currentPlayer === Tintas.Player.PLAYER2) {
+                return this._putPieceIA();
+            }else if(this.currentPlayer === Tintas.Player.PLAYER1){
+                return this._putPiece(coordinate);
+            }
         }
         return false;
     };
@@ -100,21 +112,43 @@ var Engine = function (mode) {
             this.getIntersection(this.positionPiece).setColor(Tintas.Color.BLACK);
             this.increaseColorPieceOfPlayer(colorInter);
             this.state = Tintas.StateEngine.IN_GAME;
+            //this.lastColor = this.getIntersection(coordinate).getColor();
             if(this.endOfGame()){
                 this.state = Tintas.StateEngine.END_GAME;
                 return true;
             }
             this.changePlayer();
+           /* if(!this.availableMove(this.positionPiece)) {
+                this.changePlayer();
+                this.samePlayer = false;
+            }else{
+                this.samePlayer = true;
+            }*/
             return true;
         }
         return false;
     };
 
+    /*this.availableMove = function(coord){
+        var voisins = this.getVoisins(coord);
+        var i;
+        for(i=0;i<voisins.length;i++){
+            var coordVoisin = voisins[i];
+            if(this.getIntersection(coordVoisin).getColor() === this.getLastColor()) {
+                return true;
+            }
+        }
+    };*/
+
     this.move = function (newCoordinate) {
         if(this.getMode() === Tintas.Mode._1V1) {
             return this._move(newCoordinate);
         }else if(this.getMode() === Tintas.Mode._IA){
-            return this._moveIA();
+            if(this.currentPlayer === Tintas.Player.PLAYER2) {
+                return this._moveIA();
+            }else if(this.currentPlayer === Tintas.Player.PLAYER1){
+                return this._move(newCoordinate);
+            }
         }
         return false;
     };
@@ -124,6 +158,7 @@ var Engine = function (mode) {
             return false;
         this.getIntersection(this.getPositionPiece()).setColor(Tintas.Color.TRANSPARENT);
         var newColor = this.getIntersection(newCoordinate).getColor();
+        //this.lastColor = newColor;
         this.increaseColorPieceOfPlayer(newColor);
         this.getIntersection(newCoordinate).setColor(Tintas.Color.BLACK);
         this.setPositionPiece(newCoordinate);
@@ -135,6 +170,12 @@ var Engine = function (mode) {
             return true;
         }
         this.changePlayer();
+        /*if(!this.availableMove(this.positionPiece)) {
+            this.changePlayer();
+            this.samePlayer = false;
+        }else{
+            this.samePlayer = true;
+        }*/
         return true;
     };
 
@@ -142,7 +183,7 @@ var Engine = function (mode) {
         var voisins = this.getVoisins(this.getPositionPiece());
         var indexVoisins = Math.floor(Math.random() * voisins.length);
         var coord = this.getIntersections()[indexVoisins].getCoord();
-        return this.move(coord);
+        return this._move(coord);
     };
 
     this.endOfGame = function() {
@@ -197,10 +238,18 @@ var Engine = function (mode) {
 
     this.isMoveValid = function (newCoordinate) {
         var voisins = this.getVoisins(this.getPositionPiece());
-        var i = 0;
+        var i;
         for(i=0;i<voisins.length;i++){
             if(voisins[i].equal(newCoordinate)){
-                return true;
+                /*if(!this.samePlayer)
+                    return true;
+                if(this.getIntersection(newCoordinate).getColor !== this.getLastColor()){
+                    this.lastColor = null;
+                    this.changePlayer();
+                    return false;
+                }else{*/
+                    return true;
+                /*}*/
             }
         }
         return false;
@@ -273,6 +322,8 @@ var Engine = function (mode) {
         this.availableColors = [0, 1, 2, 3, 4, 5, 6];
         this.intersections = [];
         this.state = Tintas.StateEngine.FIRST_TOUR;
+        /*this.lastColor = null;
+        this.samePlayer = false;*/
         this.nbColors = [0, 0, 0, 0, 0, 0, 0];
         var randomPlayer = Math.floor(Math.random() * 2);
         if(randomPlayer === 0){
@@ -280,7 +331,7 @@ var Engine = function (mode) {
         }else if(randomPlayer === 1){
             this.currentPlayer=Tintas.Player.PLAYER2;
         }
-        this.mode = 0;
+        this.mode = Tintas.Mode._1V1;
         if(mode){
             this.mode = mode;
         }
@@ -299,6 +350,4 @@ var Engine = function (mode) {
     };
 
     this.initialize();
-
-
 };
