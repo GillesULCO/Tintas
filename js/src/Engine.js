@@ -96,10 +96,24 @@ var Engine = function (mode) {
     };
 
     this._putPieceIA = function(){
-      var inters = this.getIntersections();
-      var indexInter = Math.floor(Math.random() * this.getIntersections().length);
+      var inters = this.getIntersectionsValid();
+      var indexInter = Math.floor(Math.random() * inters.length);
       var coord = inters[indexInter].getCoord();
-      return this._putPiece(coord);
+      if(coord){
+          return this._putPiece(coord);
+      }
+    };
+
+    this.getIntersectionsValid = function() {
+        var inters = this.getIntersections();
+        var intersValid = [];
+        var i;
+        for(i = 0; i<inters.length;i++){
+            if(inters[i].getColor() !== Tintas.Color.TRANSPARENT && inters[i].getColor() !== Tintas.Color.BLACK){
+                intersValid.push(inters[i]);
+            }
+        }
+        return intersValid;
     };
 
     this._putPiece = function(coordinate){
