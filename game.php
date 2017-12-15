@@ -63,7 +63,7 @@ else
 <body>
 <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
     <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="index.php">DIETER STAIN</a>
+        <a class="navbar-brand js-scroll-trigger" href="game.php">DIETER STAIN</a>
         <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             Menu
             <i class="fa fa-bars"></i>
@@ -84,8 +84,7 @@ else
         </div>
         <div class="col-md-6 text-center">
             <button type="button" class="btn btn-primary" id="btn-1vs1" style="margin-right:5px">1 vs 1</button>
-            <button type="button" class="btn btn-success" style="margin-right:5px">Matchs aller/retour</button>
-            <button type="button" class="btn btn-warning">Le 4 à la suite</button>
+            <button type="button" class="btn btn-success" id="btn-1vsIA" style="margin-right:5px">Match contre IA</button>
         </div>
     </div>
     <div class="row">
@@ -155,10 +154,16 @@ else
         </div>
     </div>
     <div class="form-group text-center" style="margin-bottom: 15px; margin-top: 15px">
-        <button type="button" class="btn btn-danger" style="margin-right:5px">Quitter la partie</button>
+        <button type="button" class="btn btn-danger" id="new-game" style="margin-right:5px">Nouvelle partie</button>
     </div>
 </div>
 
 </body>
 
 </html>
+
+<script type="text/javascript">
+    $('#new-game').click(function() {
+        location.reload();
+    });
+</script>
