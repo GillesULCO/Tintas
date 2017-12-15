@@ -154,10 +154,16 @@ else
         </div>
     </div>
     <div class="form-group text-center" style="margin-bottom: 15px; margin-top: 15px">
-        <button type="button" class="btn btn-danger" style="margin-right:5px">Quitter la partie</button>
+        <button type="button" class="btn btn-danger" id="new-game" style="margin-right:5px">Nouvelle partie</button>
     </div>
 </div>
 
 </body>
 
 </html>
+
+<script type="text/javascript">
+    $('#new-game').click(function() {
+        location.reload();
+    });
+</script>
