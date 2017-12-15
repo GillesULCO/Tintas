@@ -196,7 +196,7 @@ var Engine = function (mode) {
     this._moveIA = function(){
         var voisins = this.getVoisins(this.getPositionPiece());
         var indexVoisins = Math.floor(Math.random() * voisins.length);
-        var coord = this.getIntersections()[indexVoisins].getCoord();
+        var coord = voisins[indexVoisins];
         return this._move(coord);
     };
 
