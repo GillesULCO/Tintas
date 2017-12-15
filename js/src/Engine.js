@@ -99,7 +99,9 @@ var Engine = function (mode) {
       var inters = this.getIntersectionsValid();
       var indexInter = Math.floor(Math.random() * inters.length);
       var coord = inters[indexInter].getCoord();
-      return this._putPiece(coord);
+      if(coord){
+          return this._putPiece(coord);
+      }
     };
 
     this.getIntersectionsValid = function() {
