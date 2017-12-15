@@ -78,6 +78,9 @@ window.onload = function() {
     // Évènements bloqué lors du tour de l'IA
     var eventsBlocked = false;
 
+    // Références vers les sprites du plateau
+    var refSprites = [];
+
     // Chargement des assets
     function preload() {
         game.load.image('slot', 'img/slot.png');
@@ -232,6 +235,8 @@ window.onload = function() {
                 // Activation des évènements
                 slotSprite.inputEnabled = true;
                 slotSprite.events.onInputDown.add(spriteClick, this);
+
+                refSprites.push(slotSprite);
             }
         }
 
@@ -317,6 +322,16 @@ window.onload = function() {
         }
     }
 
+    function getSpriteByCoordinate(coordinates) {
+        for (var i = 0; i < refSprites.length; i++) {
+            if (refSprites[i].coordinates.equal(coordinates)) {
+                return refSprites[i];
+            }
+        }
+
+        return null;
+    }
+
     function updateIA() {
         if (!gameFinished) {
             if (engine.getState() === Tintas.StateEngine.END_GAME && !requestSend) {
@@ -334,7 +349,45 @@ window.onload = function() {
                     deltaIA += game.time.elapsed / 1000;
 
                     if (deltaIA >= 3) {
-                        engine.move();
+                        if (engine.getState() === Tintas.StateEngine.FIRST_TOUR) {
+                            var currentPos = engine.getPositionPiece();
+                            if (currentPos !== null) {
+                                // Enlève l'ancienne piece
+                                var piece = getSpriteByCoordinate(currentPos);
+                                changeSpriteTexture(piece, 'slot');
+                            }
+
+                            // Mouvement de l'IA
+                            engine.putPiece();
+
+                            // Nouvelle position
+                            currentPos = engine.getPositionPiece();
+
+                            // Place le pion
+                            var slot = getSpriteByCoordinate(currentPos);
+                            changeSpriteTexture(slot, 'slot_pion');
+                            spritePion = slot;
+                        } else if (engine.getState() === Tintas.StateEngine.IN_GAME) {
+                            var currentPos = engine.getPositionPiece();
+                            if (currentPos !== null) {
+                                // Enlève l'ancienne piece
+                                var piece = getSpriteByCoordinate(currentPos);
+                                changeSpriteTexture(piece, 'slot');
+                            }
+
+                            engine.move();
+
+                            // Nouvelle position
+                            currentPos = engine.getPositionPiece();
+
+                            // Place le pion
+                            var slot = getSpriteByCoordinate(currentPos);
+                            changeSpriteTexture(slot, 'slot_pion');
+                            spritePion = slot;
+                        }
+
+                        updateText();
+
                         deltaIA = 0;
                     }
                 } else {
