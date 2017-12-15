@@ -41,7 +41,7 @@
     </div>
 </nav>
 
-<header class="masthead bg-primary text-white text-center">
+<header class="masthead bg-primary text-white text-center connexion">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
