@@ -249,7 +249,7 @@ window.onload = function() {
     }
 
     function validerAction() {
-        if (eventsBlocked) {
+        if (eventsBlocked || selectedSprite === null) {
             return;
         }
 
@@ -387,6 +387,7 @@ window.onload = function() {
                         }
 
                         updateText();
+                        updatePiecesCounter();
 
                         deltaIA = 0;
                     }
