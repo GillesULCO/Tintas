@@ -81,7 +81,7 @@ else
     </div>
 </nav>
 <div class="text-white" style="padding-top: 0px; margin-top: 150px;">
-    <div class="row" style="margin-bottom: 15px">
+    <!--<div class="row" style="margin-bottom: 15px">
         <div class="col-md-3 text-center">
             Mode de jeu souhaité :
         </div>
@@ -89,7 +89,7 @@ else
             <button type="button" class="btn btn-primary" id="btn-1vs1" style="margin-right:5px">1 vs 1</button>
             <button type="button" class="btn btn-success" id="btn-1vsIA" style="margin-right:5px">Match against IA</button>
         </div>
-    </div>
+    </div>-->
     <div class="row">
         <div class="col-lg-3">
             <div class="panel panel-default text-center" style="padding-top:100px">
