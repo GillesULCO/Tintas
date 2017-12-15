@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 
 <head>
 
@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Projet M1 I2L - Jeu TINTAS</title>
+    <title>Projet M1 I2L - TINTAS game</title>
 
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -23,7 +23,7 @@
 
 <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
     <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="index.php">DIETER STAIN</a>
+        <a class="navbar-brand js-scroll-trigger" href="en_index.php">DIETER STAIN</a>
         <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             Menu
             <i class="fa fa-bars"></i>
@@ -31,27 +31,27 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item mx-0 mx-lg-1">
-                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="inscription.php">Inscription</a>
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="en_inscription.php">Registration</a>
                 </li>
                 <li class="nav-item mx-0 mx-lg-1">
-                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="connexion.php">Connexion</a>
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="en_connexion.php">Log in</a>
                 </li>
                 <li class="nav-item mx-0 mx-lg-1">
-                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="en_connexion.php"><img src="img/usa.png"></a>
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="connexion.php"><img src="img/fr.png"></a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
 
-<header class="masthead bg-primary text-white text-center">
+<header class="masthead bg-primary text-white text-center connexion">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel panel-heading text-center">
                         <h3 class="panel-title">
-                            AUTHENTIFICATION
+                            AUTHENTICATION
                         </h3>
                     </div>
                     <div class="panel-body">
@@ -60,24 +60,24 @@
                                 <img src="img/cadenas.jpg" alt="cadenas" class="img-rounded" >
                             </div>
                         </div>
-                        <form class="form-horizontal" method="POST" action="db/traitement_connexion.php">
+                        <form class="form-horizontal" method="POST" action="db/en_traitement_connexion.php">
                             <div class="form-group" style="margin-top:70px">
-                                <label class="col-md-4 control-label" for="pseudo" >Identifiant :</label>
+                                <label class="col-md-4 control-label" for="pseudo" >Login :</label>
                                 <div class="col-md-12" id="pseudoDIV">
-                                    <input type="text" class="form-control" id="pseudo" name="pseudo" placeholder="Pseudo">
+                                    <input type="text" class="form-control" id="pseudo" name="pseudo" placeholder="Login">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-md-4 control-label" for="motdepasse">Mot de passe :</label>
+                                <label class="col-md-4 control-label" for="motdepasse">Password :</label>
                                 <div class="col-md-12" id="motdepasseDIV">
-                                    <input type="password" class="form-control" id="motdepasse" name="motdepasse" placeholder="Mot de passe">
+                                    <input type="password" class="form-control" id="motdepasse" name="motdepasse" placeholder="Password">
                                 </div>
                             </div>
                             <div class="col-md-8 col-md-offset-2 hidden text-center msgErreur"></div>
-                            <div class="col-md-8 col-md-offset-2 text-center" id="errorLog">Votre identifiant ou mot de passe est incorrect !</div>
+                            <div class="col-md-8 col-md-offset-2 text-center" id="errorLog">Your username or password is incorrect!</div>
                             <div class="form-group">
                                 <div class="col-md-12">
-                                    <button type="submit" class="btn btn-primary btn-block" id="btn-connexion">Se connecter</button>
+                                    <button type="submit" class="btn btn-primary btn-block" id="btn-connexion">Log in</button>
                                 </div>
                             </div>
                         </form>
